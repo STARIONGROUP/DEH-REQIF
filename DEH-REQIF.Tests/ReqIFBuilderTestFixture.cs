@@ -34,6 +34,7 @@ namespace DEHReqIF.Tests
     /// <summary>
     /// Suite of tests for the <see cref="ReqIFBuilder"/> class
     /// </summary>
+    [TestFixture]
     public class ReqIFBuilderTestFixture
     {
         private readonly Uri uri = new Uri("https://www.rheagroup.com");
@@ -46,6 +47,8 @@ namespace DEHReqIF.Tests
         {
             this.assembler = new Assembler(this.uri);
             this.requirementsSpecifications = new List<RequirementsSpecification>();
+
+            this.PopulateRequirementsData();
         }
 
         private void PopulateRequirementsData()

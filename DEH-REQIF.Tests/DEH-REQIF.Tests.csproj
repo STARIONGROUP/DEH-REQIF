@@ -2,6 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
+	<Description>Unit tests for the DEH-ReqIF library.</Description>
+    <Company>RHEA System S.A.</Company>
+	<Copyright>Copyright 2022 RHEA System S.A.</Copyright>
+	<RepositoryUrl>https://github.com/RHEAGROUP/DEH-REQIF.git</RepositoryUrl>
+	<RepositoryType>Git</RepositoryType>
 	<RootNamespace>DEHReqIF.Tests</RootNamespace>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
@@ -11,7 +16,15 @@
     <PackageReference Include="NUnit" Version="3.13.3" />
     <PackageReference Include="NUnit3TestAdapter" Version="4.2.1" />
     <PackageReference Include="NUnit.Analyzers" Version="3.3.0" />
-    <PackageReference Include="coverlet.collector" Version="3.1.2" />
+    <PackageReference Include="NUnit.Console" Version="3.15.0" />
+	<PackageReference Include="coverlet.collector" Version="3.1.2">
+	   <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	   <PrivateAssets>all</PrivateAssets>
+	</PackageReference>
+    <PackageReference Include="coverlet.msbuild" Version="3.1.2">
+	  <PrivateAssets>all</PrivateAssets>
+	  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
