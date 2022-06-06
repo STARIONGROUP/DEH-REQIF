@@ -5,7 +5,7 @@
     <RootNamespace>DEHReqIF</RootNamespace>
 	<Version>0.1.0</Version>
 	<Description>A .NET library to conver ECSS-E-TM-10-25 requirements to an OMG ReqIF file.</Description>
-	<PackageId>DEHReqIF</PackageId>
+	<PackageId>DEH-ReqIF</PackageId>
 	<Company>RHEA System S.A.</Company>
 	<Copyright>Copyright 2022 RHEA System S.A.</Copyright>
 	<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
