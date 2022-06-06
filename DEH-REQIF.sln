@@ -7,6 +7,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DEH-REQIF", "DEH-REQIF\DEH-
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DEH-REQIF.Tests", "DEH-REQIF.Tests\DEH-REQIF.Tests.csproj", "{6A17B8D4-9570-47BF-8C3C-3665A637D259}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2A70123F-2ED3-446F-AB52-BC188F1EC90C}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		CODE_OF_CONDUCT.md = CODE_OF_CONDUCT.md
+		coverlet.runsettings = coverlet.runsettings
+		LICENSE = LICENSE
+		NOTICE = NOTICE
+		Nuget.Config = Nuget.Config
+		README.md = README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
