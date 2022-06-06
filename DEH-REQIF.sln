@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32519.379
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DEH-REQIF", "DEH-REQIF\DEH-REQIF.csproj", "{9CE8A7FE-2E82-4C64-A3E8-5123B37900BC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DEH-REQIF", "DEH-REQIF\DEH-REQIF.csproj", "{9CE8A7FE-2E82-4C64-A3E8-5123B37900BC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DEH-REQIF.Tests", "DEH-REQIF.Tests\DEH-REQIF.Tests.csproj", "{6A17B8D4-9570-47BF-8C3C-3665A637D259}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{9CE8A7FE-2E82-4C64-A3E8-5123B37900BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9CE8A7FE-2E82-4C64-A3E8-5123B37900BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9CE8A7FE-2E82-4C64-A3E8-5123B37900BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A17B8D4-9570-47BF-8C3C-3665A637D259}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A17B8D4-9570-47BF-8C3C-3665A637D259}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A17B8D4-9570-47BF-8C3C-3665A637D259}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A17B8D4-9570-47BF-8C3C-3665A637D259}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
