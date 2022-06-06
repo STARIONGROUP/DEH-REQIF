@@ -19,7 +19,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="CDP4Dal-CE" Version="8.1.0" />
     <PackageReference Include="ReqIFSharp" Version="5.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Mapping\" />
   </ItemGroup>
 
 </Project>

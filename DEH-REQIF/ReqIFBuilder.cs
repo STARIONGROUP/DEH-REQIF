@@ -20,11 +20,31 @@
 
 namespace DEHReqIF
 {
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+
+    using CDP4Common.EngineeringModelData;
+
+    using ReqIFSharp;
+
     /// <summary>
     /// The purpose of the <see cref="ReqIFBuilder"/> is to build/generate a ReqIF file based
     /// om an ECSS-E-TM-10-25 data set (requirements and reference data)
     /// </summary>
     public class ReqIFBuilder : IReqIFBuilder
     {
+        /// <summary>
+        /// Builds the ReqIF content from the provided <see cref="IEnumerable{RequirementsSpecification}"/>
+        /// </summary>
+        /// <param name="requirementsSpecifications">
+        /// The <see cref="RequirementsSpecification"/>s that needs to be converted to ReqIF content
+        /// </param>
+        /// <returns>
+        /// An awaitable <see cref="Task"/>
+        /// </returns>
+        public Task Build(IEnumerable<RequirementsSpecification> requirementsSpecifications)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
