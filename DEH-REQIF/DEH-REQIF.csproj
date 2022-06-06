@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>DEHReqIF</RootNamespace>
+	<Version>0.1.0</Version>
+	<Description>A .NET library to conver ECSS-E-TM-10-25 requirements to an OMG ReqIF file.</Description>
+	<PackageId>DEHReqIF</PackageId>
+	<Company>RHEA System S.A.</Company>
+	<Copyright>Copyright 2022 RHEA System S.A.</Copyright>
+	<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+	<RepositoryType>Git</RepositoryType>
+	<PackageTags>ReqIF ECSS-E-TM-10-25 COMET</PackageTags>
+	<Authors>Sam Gerené</Authors>
+	<RequireLicenseAcceptance>false</RequireLicenseAcceptance>
+    <PackageReleaseNotes>
+	  [Initial Version]
+    </PackageReleaseNotes>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ReqIFSharp" Version="5.0.2" />
+  </ItemGroup>
+
+</Project>
