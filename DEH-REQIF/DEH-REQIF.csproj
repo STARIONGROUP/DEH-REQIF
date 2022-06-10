@@ -24,8 +24,4 @@
     <PackageReference Include="ReqIFSharp" Version="5.0.2" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Mapping\" />
-  </ItemGroup>
-
 </Project>
