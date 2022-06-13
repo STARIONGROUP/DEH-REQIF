@@ -1,0 +1,55 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+      <OutputType>Exe</OutputType>
+      <TargetFramework>net6.0</TargetFramework>
+	  <RootNamespace>DEHReqIF.Console</RootNamespace>
+	  <Version>0.1.0</Version>
+	  <Description>A Coomandline application used to convert an E-TM-10-25 data source into a ReqIF document.</Description>
+	  <Company>RHEA System S.A.</Company>
+	  <Copyright>Copyright 2022 RHEA System S.A.</Copyright>
+	  <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+	  <RepositoryUrl>https://github.com/RHEAGROUP/DEH-REQIF.git</RepositoryUrl>
+	  <RepositoryType>Git</RepositoryType>
+	  <Authors>Sam Gerené</Authors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\ascii-art.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\ascii-art.txt" />
+  </ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Autofac" Version="6.4.0" />
+		<PackageReference Include="AutofacSerilogIntegration" Version="5.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.1" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions " Version="2.0.2" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Json " Version="2.0.2" />
+		<PackageReference Include="Microsoft.Extensions.CommandLineUtils" Version="1.1.1" />
+		<PackageReference Include="Serilog" Version="2.11.0" />
+		<PackageReference Include="Serilog.Enrichers.Environment" Version="2.2.0" />
+		<PackageReference Include="Serilog.Enrichers.Thread" Version="3.1.0" />
+		<PackageReference Include="Serilog.Settings.Configuration" Version="3.3.0" />
+		<PackageReference Include="Serilog.Sinks.Console" Version="4.0.1" />
+		<PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
+	</ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DEH-REQIF\DEH-REQIF.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="Microsoft.Extensions.Configuration.FileExtensions" Version="6.0.0" />
+    <PackageReference Update="Microsoft.Extensions.Configuration.Json" Version="6.0.0" />
+  </ItemGroup>
+
+</Project>

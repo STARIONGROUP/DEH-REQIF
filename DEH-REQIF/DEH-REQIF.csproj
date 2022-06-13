@@ -21,7 +21,12 @@
 
   <ItemGroup>
     <PackageReference Include="CDP4Dal-CE" Version="8.1.0" />
-    <PackageReference Include="ReqIFSharp" Version="5.0.2" />
+    <PackageReference Include="ReqIFSharp.Extensions" Version="1.0.0-RC1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Serrvices\" />
+    <Folder Include="Reporting\" />
   </ItemGroup>
 
 </Project>
