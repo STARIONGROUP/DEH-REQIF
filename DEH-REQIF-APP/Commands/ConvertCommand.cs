@@ -39,7 +39,7 @@ namespace DEHReqIF.Console.Commands
         /// <summary>
         /// The (injected) <see cref="IReqIFLoaderService"/> used to read a ReqIF document
         /// </summary>
-        private IReqIFLoaderService reqIfLoaderService;
+        private readonly IReqIFLoaderService reqIfLoaderService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConvertCommand"/>

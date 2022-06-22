@@ -17,15 +17,17 @@
     <PackageReleaseNotes>
 	  [Initial Version]
     </PackageReleaseNotes>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="CDP4Dal-CE" Version="8.1.0" />
     <PackageReference Include="ReqIFSharp.Extensions" Version="1.0.0-RC1" />
+    <PackageReference Include="System.Text.Json" Version="6.0.5" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Serrvices\" />
+    <Folder Include="Services\" />
     <Folder Include="Reporting\" />
   </ItemGroup>
 

@@ -18,7 +18,7 @@
 //  </copyright>
 //  -------------------------------------------------------------------------------------------------
 
-namespace DEHReqIF.Serrvices
+namespace DEHReqIF.Services
 {
     using System.Threading.Tasks;
 

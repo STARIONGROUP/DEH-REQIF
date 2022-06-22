@@ -9,6 +9,7 @@
 	  <RepositoryType>Git</RepositoryType>
       <RootNamespace>DEHReqIF.Console.Tests</RootNamespace>
 	  <IsPackable>false</IsPackable>
+	  <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
 	<ItemGroup>

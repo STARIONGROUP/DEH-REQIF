@@ -12,6 +12,7 @@
 	  <RepositoryUrl>https://github.com/RHEAGROUP/DEH-REQIF.git</RepositoryUrl>
 	  <RepositoryType>Git</RepositoryType>
 	  <Authors>Sam Gerené</Authors>
+	  <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>

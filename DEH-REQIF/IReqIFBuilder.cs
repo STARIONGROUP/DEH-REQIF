@@ -21,9 +21,7 @@
 namespace DEHReqIF
 {
     using System.Collections.Generic;
-    using System.Threading.Tasks;
-
-    using CDP4Common;
+    
     using CDP4Common.EngineeringModelData;
 
     using ReqIFSharp;
@@ -37,12 +35,16 @@ namespace DEHReqIF
         /// <summary>
         /// Builds the ReqIF content from the provided <see cref="IEnumerable{RequirementsSpecification}"/>
         /// </summary>
+        /// <param name="templateReqif">
+        /// The template <see cref="ReqIF"/> used to map <see cref="DatatypeDefinition"/>s, <see cref="SpecObjectType"/>s, <see cref="SpecificationType"/>
+        /// and <see cref="SpecRelationType"/>s
+        /// </param>
         /// <param name="requirementsSpecifications">
         /// The <see cref="RequirementsSpecification"/>s that needs to be converted to ReqIF content
         /// </param>
         /// <returns>
         /// An instance of <see cref="ReqIF"/>
         /// </returns>
-        Task<ReqIF> Build(IEnumerable<RequirementsSpecification> requirementsSpecifications);
+        ReqIF Build(ReqIF templateReqif, IEnumerable<RequirementsSpecification> requirementsSpecifications, ExportSettings exportSettings);
     }
 }

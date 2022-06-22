@@ -64,10 +64,13 @@ namespace DEHReqIF.Tests.MappingRules.ParameterTypes
             
             var datatypeDefinitionBoolean = this.scalarParameterTypeMappingRule.Transform(booleanParameterType);
 
-            Assert.That(datatypeDefinitionBoolean.LongName, Is.EqualTo(booleanParameterType.Name));
-            Assert.That(datatypeDefinitionBoolean.Description, Is.Null.Or.Empty);
-            Assert.That(datatypeDefinitionBoolean.AlternativeId.Identifier, Is.EqualTo(booleanParameterType.Iid.ToString()));
-            Assert.That(datatypeDefinitionBoolean.LastChange, Is.LessThanOrEqualTo(DateTime.UtcNow));
+            Assert.Multiple(() =>
+            {
+                Assert.That(datatypeDefinitionBoolean.LongName, Is.EqualTo(booleanParameterType.Name));
+                Assert.That(datatypeDefinitionBoolean.Description, Is.Null.Or.Empty);
+                Assert.That(datatypeDefinitionBoolean.AlternativeId.Identifier, Is.EqualTo(booleanParameterType.Iid.ToString()));
+                Assert.That(datatypeDefinitionBoolean.LastChange, Is.LessThanOrEqualTo(DateTime.UtcNow));
+            });
         }
 
         [Test]
@@ -89,10 +92,13 @@ namespace DEHReqIF.Tests.MappingRules.ParameterTypes
             
             var datatypeDefinitionBoolean = this.scalarParameterTypeMappingRule.Transform(booleanParameterType);
 
-            Assert.That(datatypeDefinitionBoolean.LongName, Is.EqualTo(booleanParameterType.Name));
-            Assert.That(datatypeDefinitionBoolean.Description, Is.EqualTo(definition.Content));
-            Assert.That(datatypeDefinitionBoolean.AlternativeId.Identifier, Is.EqualTo(booleanParameterType.Iid.ToString()));
-            Assert.That(datatypeDefinitionBoolean.LastChange, Is.LessThanOrEqualTo(DateTime.UtcNow));
+            Assert.Multiple(() =>
+            {
+                Assert.That(datatypeDefinitionBoolean.LongName, Is.EqualTo(booleanParameterType.Name));
+                Assert.That(datatypeDefinitionBoolean.Description, Is.EqualTo(definition.Content));
+                Assert.That(datatypeDefinitionBoolean.AlternativeId.Identifier, Is.EqualTo(booleanParameterType.Iid.ToString()));
+                Assert.That(datatypeDefinitionBoolean.LastChange, Is.LessThanOrEqualTo(DateTime.UtcNow));
+            });
         }
 
         [Test]
@@ -106,10 +112,13 @@ namespace DEHReqIF.Tests.MappingRules.ParameterTypes
             
             var datatypeDefinitionDate = this.scalarParameterTypeMappingRule.Transform(dateParameterType);
 
-            Assert.That(datatypeDefinitionDate.LongName, Is.EqualTo(dateParameterType.Name));
-            Assert.That(datatypeDefinitionDate.Description, Is.Null.Or.Empty);
-            Assert.That(datatypeDefinitionDate.AlternativeId.Identifier, Is.EqualTo(dateParameterType.Iid.ToString()));
-            Assert.That(datatypeDefinitionDate.LastChange, Is.LessThanOrEqualTo(DateTime.UtcNow));
+            Assert.Multiple(() =>
+            {
+                Assert.That(datatypeDefinitionDate.LongName, Is.EqualTo(dateParameterType.Name));
+                Assert.That(datatypeDefinitionDate.Description, Is.Null.Or.Empty);
+                Assert.That(datatypeDefinitionDate.AlternativeId.Identifier, Is.EqualTo(dateParameterType.Iid.ToString()));
+                Assert.That(datatypeDefinitionDate.LastChange, Is.LessThanOrEqualTo(DateTime.UtcNow));
+            });
         }
 
         [Test]
@@ -131,10 +140,13 @@ namespace DEHReqIF.Tests.MappingRules.ParameterTypes
 
             var datatypeDefinitionDate = this.scalarParameterTypeMappingRule.Transform(dateParameterType);
 
-            Assert.That(datatypeDefinitionDate.LongName, Is.EqualTo(dateParameterType.Name));
-            Assert.That(datatypeDefinitionDate.Description, Is.EqualTo(definition.Content));
-            Assert.That(datatypeDefinitionDate.AlternativeId.Identifier, Is.EqualTo(dateParameterType.Iid.ToString()));
-            Assert.That(datatypeDefinitionDate.LastChange, Is.LessThanOrEqualTo(DateTime.UtcNow));
+            Assert.Multiple(() =>
+            {
+                Assert.That(datatypeDefinitionDate.LongName, Is.EqualTo(dateParameterType.Name));
+                Assert.That(datatypeDefinitionDate.Description, Is.EqualTo(definition.Content));
+                Assert.That(datatypeDefinitionDate.AlternativeId.Identifier, Is.EqualTo(dateParameterType.Iid.ToString()));
+                Assert.That(datatypeDefinitionDate.LastChange, Is.LessThanOrEqualTo(DateTime.UtcNow));
+            });
         }
 
         [Test]
@@ -148,10 +160,13 @@ namespace DEHReqIF.Tests.MappingRules.ParameterTypes
 
             var datatypeDefinitionDate = this.scalarParameterTypeMappingRule.Transform(dateTimeParameterType);
 
-            Assert.That(datatypeDefinitionDate.LongName, Is.EqualTo(dateTimeParameterType.Name));
-            Assert.That(datatypeDefinitionDate.Description, Is.Null.Or.Empty);
-            Assert.That(datatypeDefinitionDate.AlternativeId.Identifier, Is.EqualTo(dateTimeParameterType.Iid.ToString()));
-            Assert.That(datatypeDefinitionDate.LastChange, Is.LessThanOrEqualTo(DateTime.UtcNow));
+            Assert.Multiple(() =>
+            {
+                Assert.That(datatypeDefinitionDate.LongName, Is.EqualTo(dateTimeParameterType.Name));
+                Assert.That(datatypeDefinitionDate.Description, Is.Null.Or.Empty);
+                Assert.That(datatypeDefinitionDate.AlternativeId.Identifier, Is.EqualTo(dateTimeParameterType.Iid.ToString()));
+                Assert.That(datatypeDefinitionDate.LastChange, Is.LessThanOrEqualTo(DateTime.UtcNow));
+            });
         }
 
         [Test]
@@ -173,10 +188,13 @@ namespace DEHReqIF.Tests.MappingRules.ParameterTypes
 
             var datatypeDefinitionDate = this.scalarParameterTypeMappingRule.Transform(dateTimeParameterType);
 
-            Assert.That(datatypeDefinitionDate.LongName, Is.EqualTo(dateTimeParameterType.Name));
-            Assert.That(datatypeDefinitionDate.Description, Is.EqualTo(definition.Content));
-            Assert.That(datatypeDefinitionDate.AlternativeId.Identifier, Is.EqualTo(dateTimeParameterType.Iid.ToString()));
-            Assert.That(datatypeDefinitionDate.LastChange, Is.LessThanOrEqualTo(DateTime.UtcNow));
+            Assert.Multiple(() =>
+            {
+                Assert.That(datatypeDefinitionDate.LongName, Is.EqualTo(dateTimeParameterType.Name));
+                Assert.That(datatypeDefinitionDate.Description, Is.EqualTo(definition.Content));
+                Assert.That(datatypeDefinitionDate.AlternativeId.Identifier, Is.EqualTo(dateTimeParameterType.Iid.ToString()));
+                Assert.That(datatypeDefinitionDate.LastChange, Is.LessThanOrEqualTo(DateTime.UtcNow));
+            });
         }
 
         [Test]
@@ -201,15 +219,18 @@ namespace DEHReqIF.Tests.MappingRules.ParameterTypes
 
             var datatypeDefinitionEnumeration = (DatatypeDefinitionEnumeration) this.scalarParameterTypeMappingRule.Transform(enumerationParameterType);
 
-            Assert.That(datatypeDefinitionEnumeration.LongName, Is.EqualTo(enumerationParameterType.Name));
-            Assert.That(datatypeDefinitionEnumeration.Description, Is.Null.Or.Empty);
-            Assert.That(datatypeDefinitionEnumeration.AlternativeId.Identifier, Is.EqualTo(enumerationParameterType.Iid.ToString()));
-            Assert.That(datatypeDefinitionEnumeration.LastChange, Is.LessThanOrEqualTo(DateTime.UtcNow));
+            Assert.Multiple(() =>
+            {
+                Assert.That(datatypeDefinitionEnumeration.LongName, Is.EqualTo(enumerationParameterType.Name));
+                Assert.That(datatypeDefinitionEnumeration.Description, Is.Null.Or.Empty);
+                Assert.That(datatypeDefinitionEnumeration.AlternativeId.Identifier, Is.EqualTo(enumerationParameterType.Iid.ToString()));
+                Assert.That(datatypeDefinitionEnumeration.LastChange, Is.LessThanOrEqualTo(DateTime.UtcNow));
 
-            Assert.That(datatypeDefinitionEnumeration.SpecifiedValues.Count, Is.EqualTo(2));
+                Assert.That(datatypeDefinitionEnumeration.SpecifiedValues.Count, Is.EqualTo(2));
 
-            var enumValueLow = datatypeDefinitionEnumeration.SpecifiedValues.Single(x => x.LongName == "low");
-            Assert.That(enumValueLow.AlternativeId.Identifier, Is.EqualTo(low.Iid.ToString()));
+                var enumValueLow = datatypeDefinitionEnumeration.SpecifiedValues.Single(x => x.LongName == "low");
+                Assert.That(enumValueLow.AlternativeId.Identifier, Is.EqualTo(low.Iid.ToString()));
+            });
         }
 
         [Test]
@@ -223,10 +244,13 @@ namespace DEHReqIF.Tests.MappingRules.ParameterTypes
             
             var datatypeDefinitionXhtml = (DatatypeDefinitionXHTML)this.scalarParameterTypeMappingRule.Transform(textParameterType);
 
-            Assert.That(datatypeDefinitionXhtml.LongName, Is.EqualTo(textParameterType.Name));
-            Assert.That(datatypeDefinitionXhtml.Description, Is.Null.Or.Empty);
-            Assert.That(datatypeDefinitionXhtml.AlternativeId.Identifier, Is.EqualTo(textParameterType.Iid.ToString()));
-            Assert.That(datatypeDefinitionXhtml.LastChange, Is.LessThanOrEqualTo(DateTime.UtcNow));
+            Assert.Multiple(() =>
+            {
+                Assert.That(datatypeDefinitionXhtml.LongName, Is.EqualTo(textParameterType.Name));
+                Assert.That(datatypeDefinitionXhtml.Description, Is.Null.Or.Empty);
+                Assert.That(datatypeDefinitionXhtml.AlternativeId.Identifier, Is.EqualTo(textParameterType.Iid.ToString()));
+                Assert.That(datatypeDefinitionXhtml.LastChange, Is.LessThanOrEqualTo(DateTime.UtcNow));
+            });
         }
 
         [Test]
@@ -248,13 +272,16 @@ namespace DEHReqIF.Tests.MappingRules.ParameterTypes
 
             var datatypeDefinitionInteger = (DatatypeDefinitionInteger)this.scalarParameterTypeMappingRule.Transform(qauntityKind);
 
-            Assert.That(datatypeDefinitionInteger.LongName, Is.EqualTo(qauntityKind.Name));
-            Assert.That(datatypeDefinitionInteger.Description, Is.Null.Or.Empty);
-            Assert.That(datatypeDefinitionInteger.AlternativeId.Identifier, Is.EqualTo(qauntityKind.Iid.ToString()));
-            Assert.That(datatypeDefinitionInteger.LastChange, Is.LessThanOrEqualTo(DateTime.UtcNow));
+            Assert.Multiple(() =>
+            {
+                Assert.That(datatypeDefinitionInteger.LongName, Is.EqualTo(qauntityKind.Name));
+                Assert.That(datatypeDefinitionInteger.Description, Is.Null.Or.Empty);
+                Assert.That(datatypeDefinitionInteger.AlternativeId.Identifier, Is.EqualTo(qauntityKind.Iid.ToString()));
+                Assert.That(datatypeDefinitionInteger.LastChange, Is.LessThanOrEqualTo(DateTime.UtcNow));
 
-            Assert.That(datatypeDefinitionInteger.Min, Is.EqualTo(-5));
-            Assert.That(datatypeDefinitionInteger.Max, Is.EqualTo(10));
+                Assert.That(datatypeDefinitionInteger.Min, Is.EqualTo(-5));
+                Assert.That(datatypeDefinitionInteger.Max, Is.EqualTo(10));
+            });
         }
 
         [Test]
@@ -276,13 +303,16 @@ namespace DEHReqIF.Tests.MappingRules.ParameterTypes
 
             var datatypeDefinitionInteger = (DatatypeDefinitionInteger)this.scalarParameterTypeMappingRule.Transform(qauntityKind);
 
-            Assert.That(datatypeDefinitionInteger.LongName, Is.EqualTo(qauntityKind.Name));
-            Assert.That(datatypeDefinitionInteger.Description, Is.Null.Or.Empty);
-            Assert.That(datatypeDefinitionInteger.AlternativeId.Identifier, Is.EqualTo(qauntityKind.Iid.ToString()));
-            Assert.That(datatypeDefinitionInteger.LastChange, Is.LessThanOrEqualTo(DateTime.UtcNow));
+            Assert.Multiple(() =>
+            {
+                Assert.That(datatypeDefinitionInteger.LongName, Is.EqualTo(qauntityKind.Name));
+                Assert.That(datatypeDefinitionInteger.Description, Is.Null.Or.Empty);
+                Assert.That(datatypeDefinitionInteger.AlternativeId.Identifier, Is.EqualTo(qauntityKind.Iid.ToString()));
+                Assert.That(datatypeDefinitionInteger.LastChange, Is.LessThanOrEqualTo(DateTime.UtcNow));
 
-            Assert.That(datatypeDefinitionInteger.Min, Is.EqualTo(5));
-            Assert.That(datatypeDefinitionInteger.Max, Is.EqualTo(10));
+                Assert.That(datatypeDefinitionInteger.Min, Is.EqualTo(5));
+                Assert.That(datatypeDefinitionInteger.Max, Is.EqualTo(10));
+            });
         }
 
         [Test]
@@ -304,13 +334,16 @@ namespace DEHReqIF.Tests.MappingRules.ParameterTypes
 
             var datatypeDefinitionReal = (DatatypeDefinitionReal)this.scalarParameterTypeMappingRule.Transform(qauntityKind);
 
-            Assert.That(datatypeDefinitionReal.LongName, Is.EqualTo(qauntityKind.Name));
-            Assert.That(datatypeDefinitionReal.Description, Is.Null.Or.Empty);
-            Assert.That(datatypeDefinitionReal.AlternativeId.Identifier, Is.EqualTo(qauntityKind.Iid.ToString()));
-            Assert.That(datatypeDefinitionReal.LastChange, Is.LessThanOrEqualTo(DateTime.UtcNow));
+            Assert.Multiple(() =>
+            {
+                Assert.That(datatypeDefinitionReal.LongName, Is.EqualTo(qauntityKind.Name));
+                Assert.That(datatypeDefinitionReal.Description, Is.Null.Or.Empty);
+                Assert.That(datatypeDefinitionReal.AlternativeId.Identifier, Is.EqualTo(qauntityKind.Iid.ToString()));
+                Assert.That(datatypeDefinitionReal.LastChange, Is.LessThanOrEqualTo(DateTime.UtcNow));
 
-            Assert.That(datatypeDefinitionReal.Min, Is.EqualTo(5));
-            Assert.That(datatypeDefinitionReal.Max, Is.EqualTo(10));
+                Assert.That(datatypeDefinitionReal.Min, Is.EqualTo(5));
+                Assert.That(datatypeDefinitionReal.Max, Is.EqualTo(10));
+            });
         }
 
         [Test]
@@ -332,13 +365,16 @@ namespace DEHReqIF.Tests.MappingRules.ParameterTypes
 
             var datatypeDefinitionReal = (DatatypeDefinitionReal)this.scalarParameterTypeMappingRule.Transform(qauntityKind);
 
-            Assert.That(datatypeDefinitionReal.LongName, Is.EqualTo(qauntityKind.Name));
-            Assert.That(datatypeDefinitionReal.Description, Is.Null.Or.Empty);
-            Assert.That(datatypeDefinitionReal.AlternativeId.Identifier, Is.EqualTo(qauntityKind.Iid.ToString()));
-            Assert.That(datatypeDefinitionReal.LastChange, Is.LessThanOrEqualTo(DateTime.UtcNow));
+            Assert.Multiple(() =>
+            {
+                Assert.That(datatypeDefinitionReal.LongName, Is.EqualTo(qauntityKind.Name));
+                Assert.That(datatypeDefinitionReal.Description, Is.Null.Or.Empty);
+                Assert.That(datatypeDefinitionReal.AlternativeId.Identifier, Is.EqualTo(qauntityKind.Iid.ToString()));
+                Assert.That(datatypeDefinitionReal.LastChange, Is.LessThanOrEqualTo(DateTime.UtcNow));
 
-            Assert.That(datatypeDefinitionReal.Min, Is.EqualTo(-5.102032));
-            Assert.That(datatypeDefinitionReal.Max, Is.EqualTo(10.234523423));
+                Assert.That(datatypeDefinitionReal.Min, Is.EqualTo(-5.102032));
+                Assert.That(datatypeDefinitionReal.Max, Is.EqualTo(10.234523423));
+            });
         }
     }
 }
