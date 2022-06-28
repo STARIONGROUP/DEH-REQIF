@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net6.0-windows</TargetFramework>
 	<Description>Unit tests for the DEH-ReqIF library.</Description>
     <Company>RHEA System S.A.</Company>
 	<Copyright>Copyright 2022 RHEA System S.A.</Copyright>
@@ -10,6 +10,7 @@
 	<RootNamespace>DEHReqIF.Tests</RootNamespace>
     <IsPackable>false</IsPackable>
     <LangVersion>latest</LangVersion>
+	<UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>
 
   <ItemGroup>

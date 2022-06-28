@@ -1,4 +1,20 @@
 {
   "title": "This is a test ReqIF document",
-  "requirementTextDataTypeDefinitionId": "_37267b33-5f52-4bf7-833d-78bee976f875"
+  "requirementAttributeDefinitions": {
+    "textAttributeDefinitionId" : "OBJECTTEXT",
+    "foreignDeletedAttributeDefinitionId" : "Pseudo-ForeignDeleted",
+    "nameAttributeDefinitionId" : "OBJECTSHORTTEXT",
+    "foreignModifiedOnAttributeDefinitionId" : "LASTMODIFIEDON"
+  },
+  "specificationAttributeDefinitions": {
+    "nameAttributeDefinitionId" : "NAME-DOORS-MODULE"
+  },
+  "externalIdentifierMap": {
+    "correspondence": [
+      {
+        "externalId": "EXTERNAL_ID",
+        "internalThing": "7d936326-544e-4990-96cf-54f67f7aa365"
+      }
+    ]
+  }
 }

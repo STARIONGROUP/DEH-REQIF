@@ -22,6 +22,8 @@ namespace DEHReqIF.Services
 {
     using System.Threading.Tasks;
 
+    using DEHReqIF.ExportSettings;
+
     /// <summary>
     /// The purpose of the <see cref="IExportSettingsReader"/> is to read the
     /// <see cref="ExportSettings"/> from a JSON file 
@@ -37,6 +39,6 @@ namespace DEHReqIF.Services
         /// <returns>
         /// An instance of <see cref="ExportSettings"/>
         /// </returns>
-        Task<ExportSettings> Read(string path);
+        Task<ExportSettings> ReadFile(string path);
     }
 }

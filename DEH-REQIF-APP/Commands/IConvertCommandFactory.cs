@@ -21,10 +21,19 @@
 namespace DEHReqIF.Console.Commands
 {
     using Microsoft.Extensions.CommandLineUtils;
-
-
+    
+    /// <summary>
+    /// Definition of the <see cref="IConvertCommandFactory"/> interface
+    /// </summary>
     public interface IConvertCommandFactory
     {
+        /// <summary>
+        /// Registers the <see cref="IConvertCommandFactory"/> with the <see cref="CommandLineApplication"/> and
+        /// sets the properties of the <see cref="IConvertCommand"/>, ready for execution
+        /// </summary>
+        /// <param name="commandLineApplication">
+        /// the subject <see cref="CommandLineApplication"/>
+        /// </param>
         void Register(CommandLineApplication commandLineApplication);
     }
 }

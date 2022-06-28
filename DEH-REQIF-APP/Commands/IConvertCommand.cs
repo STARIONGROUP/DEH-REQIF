@@ -49,5 +49,15 @@ namespace DEHReqIF.Console.Commands
         /// Gets or sets the path of the target ReqIF document
         /// </summary>
         public string TargetReqIF { get; set; }
+
+        /// <summary>
+        /// The ShortName of the EngineeringModelSetup
+        /// </summary>
+        string EngineeringModelIid { get; set; }
+
+        /// <summary>
+        /// Gets or sets the location of the export settings file
+        /// </summary>
+        string ExportSettings { get; set; }
     }
 }

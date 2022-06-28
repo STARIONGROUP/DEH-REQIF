@@ -54,21 +54,26 @@ namespace DEHReqIF.Console.Commands
         public void Register(CommandLineApplication commandLineApplication)
         {
             commandLineApplication.Description = $"Convert an ECSS-E-TM-10-25 data source into ReqIF document";
-            commandLineApplication.HelpOption("-?|--help");
 
-            var usernameOption = commandLineApplication.Option("-u|--username", "The username used to establish an authenticated connection",
+            var usernameOption = commandLineApplication.Option("-u|--username <USERNAME>", "The username used to establish an authenticated connection",
                 CommandOptionType.SingleValue);
 
-            var passwordOption = commandLineApplication.Option("-s|--secret", "The secret or password used to establish an authenticated connection",
+            var passwordOption = commandLineApplication.Option("-s|--secret <SECRET>", "The secret or password used to establish an authenticated connection",
                 CommandOptionType.SingleValue);
 
-            var dataSourceOption = commandLineApplication.Option("-d|--datasource", "The uri of the ECSS-E-TM-10-25 data source to convert",
+            var dataSourceOption = commandLineApplication.Option("-d|--datasource <DATASOURCE>", "The uri of the ECSS-E-TM-10-25 data source to convert",
                 CommandOptionType.SingleValue);
 
-            var templateSource = commandLineApplication.Option("-sr|--source-reqif", "The path to the ReqIF source template",
+            var templateSource = commandLineApplication.Option("-sr|--source-reqif <SOURCE_REQIF>", "The path to the ReqIF source template",
                 CommandOptionType.SingleValue);
 
-            var targetReqIF = commandLineApplication.Option("-tr|--target-reqif", "The path to the ReqIF target file",
+            var targetReqIF = commandLineApplication.Option("-tr|--target-reqif <TARGET_REQIF>", "The path to the ReqIF target file",
+                CommandOptionType.SingleValue);
+
+            var exportSettings = commandLineApplication.Option("-es|--export-settings <EXPORTSETTINGS>", "The path to the export setings json file",
+                CommandOptionType.SingleValue);
+
+            var engineeringModelIid = commandLineApplication.Option("-ei|--engineeringmodel-id <ENGINEERINGMODEL>", "The Iid of the EngineeringModel to export",
                 CommandOptionType.SingleValue);
 
             commandLineApplication.OnExecute(async () =>
@@ -79,6 +84,9 @@ namespace DEHReqIF.Console.Commands
 
                 this.ConvertCommand.TemplateSource = templateSource.HasValue() ? templateSource.Value() : string.Empty;
                 this.ConvertCommand.TargetReqIF = targetReqIF.HasValue() ? targetReqIF.Value() : string.Empty;
+
+                this.ConvertCommand.ExportSettings = exportSettings.HasValue() ? exportSettings.Value() : string.Empty;
+                this.ConvertCommand.EngineeringModelIid = engineeringModelIid.HasValue() ? engineeringModelIid.Value() : string.Empty;
                 
                 await this.ConvertCommand.ExecuteAsync();
 

@@ -39,12 +39,15 @@ namespace DEHReqIF
         /// The template <see cref="ReqIF"/> used to map <see cref="DatatypeDefinition"/>s, <see cref="SpecObjectType"/>s, <see cref="SpecificationType"/>
         /// and <see cref="SpecRelationType"/>s
         /// </param>
-        /// <param name="requirementsSpecifications">
+        /// <param name="requirementsSpecification">
         /// The <see cref="RequirementsSpecification"/>s that needs to be converted to ReqIF content
+        /// </param>
+        /// <param name="exportSettings">
+        /// The settings to be used for converting the E-CSS-TM-10-25 objects to existing ReqIF objects in the template ReqIF file
         /// </param>
         /// <returns>
         /// An instance of <see cref="ReqIF"/>
         /// </returns>
-        ReqIF Build(ReqIF templateReqif, IEnumerable<RequirementsSpecification> requirementsSpecifications, ExportSettings exportSettings);
+        ReqIF Build(ReqIF templateReqif, IEnumerable<RequirementsSpecification> requirementsSpecification, ExportSettings.ExportSettings exportSettings);
     }
 }

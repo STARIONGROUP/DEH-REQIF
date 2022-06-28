@@ -23,17 +23,17 @@ namespace DEHReqIF.Console
     using System;
 
     using Autofac;
-    using AutofacSerilogIntegration;
 
     using DEHReqIF.Console.Commands;
     using DEHReqIF.Console.Resources;
+    using DEHReqIF.Services;
 
     using Microsoft.Extensions.CommandLineUtils;
-    using Microsoft.Extensions.Configuration;
 
+    using NLog;
+
+    using ReqIFSharp;
     using ReqIFSharp.Extensions.Services;
-
-    using Serilog;
 
     public static class Program
     {
@@ -42,20 +42,19 @@ namespace DEHReqIF.Console
         /// </summary>
         private static IContainer Container { get; set; }
 
+        private static ILogger logger = LogManager.Setup().LoadConfiguration(
+            builder => 
+            {
+                builder.ForLogger().FilterMinLevel(LogLevel.Info).WriteToConsole();
+            })
+            .GetCurrentClassLogger();
+
         /// <summary>
         /// Main method that is the entry point for this BatchEditor
         /// </summary>
         /// <param name="args">The arguments</param>
         public static void Main(string[] args)
         {
-            var configuration = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json")
-                .Build();
-
-            Log.Logger = new LoggerConfiguration()
-                .ReadFrom.Configuration(configuration)
-                .CreateLogger();
-
             Container = ConfigureContainer();
 
             ConfigureCommandLineApplication(args);
@@ -69,16 +68,18 @@ namespace DEHReqIF.Console
         /// </returns>
         private static IContainer ConfigureContainer()
         {
-            Log.Logger.Debug("Configure IoC Container");
+            logger.Debug("Configure IoC Container");
 
             var builder = new ContainerBuilder();
 
             builder.RegisterType<ResourceLoader>().As<IResourceLoader>();
+            builder.RegisterType<ReqIFDeserializer>().As<IReqIFDeSerializer>();
             builder.RegisterType<ReqIFLoaderService>().As<IReqIFLoaderService>();
+            builder.RegisterType<ExportSettingsReader>().As<IExportSettingsReader>();
+            builder.RegisterType<ConvertCommand>().As<IConvertCommand>();
+            builder.RegisterType<ConvertCommandFactory>().As<IConvertCommandFactory>();
 
-            builder.RegisterLogger();
-
-            Log.Logger.Debug("IoC Container Configured");
+            logger.Debug("IoC Container Configured");
 
             return builder.Build();
         }
@@ -91,11 +92,13 @@ namespace DEHReqIF.Console
         /// </param>
         public static void ConfigureCommandLineApplication(string[] args)
         {
-            Log.Logger.Debug("Configure Command Line Arguments");
+            logger.Debug("Configure Command Line Arguments");
 
-            var commandLineApplication = new CommandLineApplication();
-            commandLineApplication.Name = "DEH-REQIF";
-            commandLineApplication.Description = "Console application to convert E-TM-10-25 requirements into a ReqIF document";
+            var commandLineApplication = new CommandLineApplication
+            {
+                Name = "DEH-REQIF",
+                Description = "Console application to convert E-TM-10-25 requirements into a ReqIF document"
+            };
 
             commandLineApplication.HelpOption("-?|--help");
 
@@ -110,8 +113,8 @@ namespace DEHReqIF.Console
             {
                 var DEHReqIFVersion = QueryVersion();
 
-                Console.WriteLine(scope.Resolve<IResourceLoader>().
-                    LoadEmbeddedResource("DEHReqIF.Console.Resources.ascii-art.txt")
+                Console.WriteLine(scope.Resolve<IResourceLoader>()
+                    .LoadEmbeddedResource("DEHReqIF.Console.Resources.ascii-art.txt")
                     .Replace("DEHReqIFVersion", DEHReqIFVersion));
 
                 commandLineApplication.Command("convert", scope.Resolve<IConvertCommandFactory>().Register);
@@ -119,7 +122,7 @@ namespace DEHReqIF.Console
 
             commandLineApplication.Execute(args);
 
-            Log.Logger.Debug("Command Line Arguments Configured");
+            logger.Debug("Command Line Arguments Configured");
         }
 
         /// <summary>
@@ -131,7 +134,7 @@ namespace DEHReqIF.Console
         public static string QueryVersion()
         {
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
-            return assembly.GetName().Version.ToString();
+            return assembly.GetName().Version?.ToString();
         }
     }
 }

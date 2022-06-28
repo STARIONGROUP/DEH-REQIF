@@ -20,11 +20,11 @@
 
 namespace DEHReqIF.Services
 {
-    using System;
     using System.IO;
     using System.Text.Json;
-    using System.Text.Json.Serialization;
     using System.Threading.Tasks;
+
+    using DEHReqIF.ExportSettings;
 
     /// <summary>
     /// The purpose of the <see cref="IExportSettingsReader"/> is to read the
@@ -41,19 +41,44 @@ namespace DEHReqIF.Services
         /// <returns>
         /// An instance of <see cref="ExportSettings"/>
         /// </returns>
-        public async Task<ExportSettings> Read(string path)
+        public async Task<ExportSettings> ReadFile(string path)
         {
             using var fileStream= File.OpenRead(path);
 
+            var exportSettings = await JsonSerializer.DeserializeAsync<ExportSettings>(fileStream, GetJsonSerializerOptions());
+
+            return exportSettings;
+        }
+
+        /// <summary>
+        /// Reads the <see cref="ExportSettings"/> from a JSON string
+        /// </summary>
+        /// <param name="json">
+        /// the file path to the export settings file
+        /// </param>
+        /// <returns>
+        /// An instance of <see cref="ExportSettings"/>
+        /// </returns>
+        public ExportSettings Read(string json)
+        {
+            var exportSettings = JsonSerializer.Deserialize<ExportSettings>(json, GetJsonSerializerOptions());
+
+            return exportSettings;
+        }
+
+        /// <summary>
+        /// Retrieve the expected <see cref="JsonSerializerOptions"/>
+        /// </summary>
+        /// <returns>The <see cref="JsonSerializerOptions"/></returns>
+        public static JsonSerializerOptions GetJsonSerializerOptions()
+        {
             var serializerOptions = new JsonSerializerOptions
             {
                 AllowTrailingCommas = true,
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase 
             };
 
-            var exportSettings = await JsonSerializer.DeserializeAsync<ExportSettings>(fileStream, serializerOptions);
-
-            return exportSettings;
+            return serializerOptions;
         }
     }
 }

@@ -34,6 +34,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Update="TestData\export-settings.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
 	  <None Update="TestData\ProR_Traceability-Template-v1.0.reqif">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>

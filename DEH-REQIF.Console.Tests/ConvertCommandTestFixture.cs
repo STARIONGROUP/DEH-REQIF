@@ -24,8 +24,10 @@ namespace DEHReqIF.Console.Tests
     using System.Threading.Tasks;
 
     using DEHReqIF.Console.Commands;
+    using DEHReqIF.Services;
 
-    using Moq;
+    using NLog;
+
     using NUnit.Framework;
 
     using ReqIFSharp;
@@ -42,21 +44,41 @@ namespace DEHReqIF.Console.Tests
 
         private ReqIFLoaderService reqIFLoaderService;
 
+        private string exportSettingsPath;
+
+        private ExportSettingsReader exportSettingsReader;
+
         [SetUp]
         public void Setup()
         {
+            LogManager.Setup().LoadConfiguration(
+                builder =>
+                {
+                    builder.ForLogger().FilterMinLevel(LogLevel.Info).WriteToConsole();
+                });
+
             this.reqifPath = Path.Combine(TestContext.CurrentContext.TestDirectory, "TestData", "ProR_Traceability-Template-v1.0.reqif");
+            this.exportSettingsPath = Path.Combine(TestContext.CurrentContext.TestDirectory, "TestData", "export-settings.json");
             
             var reqIfDeserializer = new ReqIFDeserializer();
             this.reqIFLoaderService = new ReqIFLoaderService(reqIfDeserializer);
-            
-            this.convertCommand = new ConvertCommand(this.reqIFLoaderService);
+            this.exportSettingsReader = new ExportSettingsReader();
+
+            this.convertCommand = new ConvertCommand(this.reqIFLoaderService, this.exportSettingsReader);
         }
 
         [Test]
         public async Task Verify_that_the_ConvertCommand_executes()
         {
             this.convertCommand.TemplateSource = this.reqifPath;
+
+            this.convertCommand.Username = "admin";
+            this.convertCommand.Password = "pass";
+            this.convertCommand.DataSource = "http://localhost:81";
+            this.convertCommand.TemplateSource = "c:\\ReqIf\\Def2.reqifz";
+            this.convertCommand.TargetReqIF = "c:\\ReqIf\\output2.reqif";
+            this.convertCommand.EngineeringModelIid = "694508eb-2730-488c-9405-6ca561df68dd";
+            this.convertCommand.ExportSettings = this.exportSettingsPath;
 
             await this.convertCommand.ExecuteAsync();
         }

@@ -21,14 +21,22 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Reporting\**" />
+    <EmbeddedResource Remove="Reporting\**" />
+    <None Remove="Reporting\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="CDP4Dal-CE" Version="8.1.0" />
+    <PackageReference Include="CDP4ServicesDal-CE" Version="8.1.0" />
+    <PackageReference Include="NLog" Version="5.0.1" />
+    <PackageReference Include="NLog.Extensions.Logging" Version="5.0.1" />
     <PackageReference Include="ReqIFSharp.Extensions" Version="1.0.0-RC1" />
     <PackageReference Include="System.Text.Json" Version="6.0.5" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Services\" />
-    <Folder Include="Reporting\" />
   </ItemGroup>
 
 </Project>
