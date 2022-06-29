@@ -49,5 +49,10 @@ namespace DEHReqIF.ExportSettings
         /// Gets or sets the <see cref="ExternalIdentifierMap"/> used to map specific E-CSS-TM-10-25 objects to ReqIf objects
         /// </summary>
         public ExternalIdentifierMap ExternalIdentifierMap { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating the XHTML tags should be added to XHTML type elements in the ReqIF XML
+        /// </summary>
+        public bool AddXHTMLtags { get; set; } = false;
     }
 }

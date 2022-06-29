@@ -22,12 +22,9 @@ namespace DEHReqIF.Tests
 {
     using System;
     using System.IO;
-    using System.IO.Compression;
     using System.Linq;
-    using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
-    using System.Windows.Forms;
 
     using CDP4Common.CommonData;
     using CDP4Common.EngineeringModelData;
@@ -70,6 +67,14 @@ namespace DEHReqIF.Tests
 
         private ExportSettings exportSettings;
         private MemoryTarget memoryTarget;
+        private Guid codeParameterTypeGuid;
+        private Guid enumerationParameterType1Guid;
+        private Guid enumerationParameterType2Guid;
+        private RequirementsGroup requirementsGroup1;
+        private RequirementsGroup requirementsGroup2;
+        private Requirement requirement0;
+        private Requirement requirement1;
+        private Requirement requirement2;
 
         [SetUp]
         public async Task Setup()
@@ -81,8 +86,12 @@ namespace DEHReqIF.Tests
             configuration.LoggingRules.Add(new LoggingRule("*", LogLevel.Warn, this.memoryTarget));
             LogManager.Configuration = configuration;
 
-            this.engineeringModelIid = Guid.Parse("71b700a5-b6e7-418e-a38f-ca6697a0e7e0");
-            this.iterationIid = Guid.Parse("d82f4d39-3c5f-4d86-aad0-8eac9be2c6cc");
+            this.codeParameterTypeGuid = Guid.NewGuid();
+            this.enumerationParameterType1Guid = Guid.NewGuid();
+            this.enumerationParameterType2Guid = Guid.NewGuid();
+
+            this.engineeringModelIid = Guid.NewGuid();
+            this.iterationIid = Guid.NewGuid();
 
             this.assembler = new Assembler(this.uri);
 
@@ -97,20 +106,32 @@ namespace DEHReqIF.Tests
 
             referenceMap.Correspondence.Add(new IdCorrespondence()
             {
-                ExternalId = "_21214a3a-b9c5-4242-ab90-32679435ad71",
-                InternalThing = Guid.Parse("6503c390-5e9f-403e-b25d-ebe194a8fd73")
+                ExternalId = "_IdInSource1",
+                InternalThing = this.codeParameterTypeGuid
             });
 
             referenceMap.Correspondence.Add(new IdCorrespondence()
             {
-                ExternalId = "_8cf7fb2f-f7b0-4c3a-9603-21082e01732b",
-                InternalThing = Guid.Parse("14dcfc50-c410-4d8c-90ba-d8b3476f441e")
+                ExternalId = "_IdInSource2",
+                InternalThing = this.codeParameterTypeGuid
             });
 
             referenceMap.Correspondence.Add(new IdCorrespondence()
             {
-                ExternalId = "_61b26c16-4007-46c5-a77c-ba2ad9c08ccc",
-                InternalThing = Guid.Parse("7d936326-544e-4990-96cf-54f67f7aa365")
+                ExternalId = "_IdInSourceSpecification",
+                InternalThing = this.codeParameterTypeGuid
+            });
+
+            referenceMap.Correspondence.Add(new IdCorrespondence()
+            {
+                ExternalId = "_EnumerationParameter1",
+                InternalThing = this.enumerationParameterType1Guid
+            });
+
+            referenceMap.Correspondence.Add(new IdCorrespondence()
+            {
+                ExternalId = "_EnumerationParameter2",
+                InternalThing = this.enumerationParameterType2Guid
             });
 
             this.exportSettings = new ExportSettings
@@ -118,14 +139,15 @@ namespace DEHReqIF.Tests
                 Title = "This is a test ReqIF document",
                 RequirementAttributeDefinitions = new AttributeDefinitions()
                 {
-                    TextAttributeDefinitionId = "_9eae55c1-9c66-4308-a61e-25ba7ac63cb7_OBJECTTEXT",
-                    ForeignDeletedAttributeDefinitionId = "_b72cd753-1960-4ff7-8427-7d8928a8d4ecPseudo-ForeignDeleted",
-                    NameAttributeDefinitionId = "_9eae55c1-9c66-4308-a61e-25ba7ac63cb7_OBJECTSHORTTEXT",
-                    ForeignModifiedOnAttributeDefinitionId = "_9eae55c1-9c66-4308-a61e-25ba7ac63cb7_LASTMODIFIEDON"
+                    TextAttributeDefinitionId = "_TextParameter",
+                    ForeignDeletedAttributeDefinitionId = "Pseudo-ForeignDeleted",
+                    NameAttributeDefinitionId = "_NameParameter",
+                    ForeignModifiedOnAttributeDefinitionId = "LASTMODIFIEDON"
                 },
                 SpecificationAttributeDefinitions = new AttributeDefinitions()
                 {
-                    NameAttributeDefinitionId = "_4b071b6c-341d-4d14-812c-28c4a2d489b1_NAME-DOORS-MODULE"
+                    TextAttributeDefinitionId = "_TextParameterSpecification",
+                    NameAttributeDefinitionId = "_NameParameterSpecification"
                 },
                 ExternalIdentifierMap = referenceMap
             };
@@ -133,26 +155,13 @@ namespace DEHReqIF.Tests
 
         private async Task CreateTemplateReqIF()
         {
-            //this.reqifTemplatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "TestData", "ProR_Traceability-Template-v1.0.reqif");
-
-            using (var openFileDialog = new OpenFileDialog())
-            {
-                openFileDialog.InitialDirectory = "C:\\ReqIf\\";
-                openFileDialog.RestoreDirectory = true;
-
-                if (openFileDialog.ShowDialog() == DialogResult.OK)
-                {
-                    //Get the path of specified file
-                    this.reqifTemplatePath = openFileDialog.FileName;
-                }
-            }
+            this.reqifTemplatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "TestData", "Test.reqif");
 
             var reqIfDeserializer = new ReqIFDeserializer();
             var reqIFLoaderService = new ReqIFLoaderService(reqIfDeserializer);
-
             var cts = new CancellationTokenSource();
-            await using var fileStream = new FileStream(this.reqifTemplatePath, FileMode.Open);
 
+            await using var fileStream = new FileStream(this.reqifTemplatePath, FileMode.Open);
             await reqIFLoaderService.Load(fileStream, cts.Token);
 
             this.templateReqIF = reqIFLoaderService.ReqIFData.Single();
@@ -169,126 +178,119 @@ namespace DEHReqIF.Tests
                 Name = "Requirements Specification", ShortName = "REQ"
             };
 
-            var requirementsGroup1 = new RequirementsGroup(Guid.NewGuid(), this.assembler.Cache, this.uri)
+            this.requirementsGroup1 = new RequirementsGroup(Guid.NewGuid(), this.assembler.Cache, this.uri)
             {
                 Name = "Group 1",
                 ShortName = "GROUP1"
             };
 
-            var requirementsGroup2 = new RequirementsGroup(Guid.NewGuid(), this.assembler.Cache, this.uri)
+            this.requirementsGroup2 = new RequirementsGroup(Guid.NewGuid(), this.assembler.Cache, this.uri)
             {
                 Name = "Group 2",
                 ShortName = "GROUP2"
             };
 
-            var requirement0 = new Requirement(Guid.NewGuid(), this.assembler.Cache, this.uri)
+            this.requirement0 = new Requirement(Guid.NewGuid(), this.assembler.Cache, this.uri)
             {
                 Name = "Requirement 0",
                 ShortName = "REQ0"
             };
 
-            var requirement1 = new Requirement(Guid.NewGuid(), this.assembler.Cache, this.uri)
+            this.requirement1 = new Requirement(Guid.NewGuid(), this.assembler.Cache, this.uri)
             {
                 Name = "Requirement 1",
                 ShortName = "REQ1"
             };
 
-            var requirement2 = new Requirement(Guid.NewGuid(), this.assembler.Cache, this.uri)
+            this.requirement2 = new Requirement(Guid.NewGuid(), this.assembler.Cache, this.uri)
             {
                 Name = "Requirement 2",
                 ShortName = "REQ2"
             };
 
-            requirement1.Group = requirementsGroup1;
-            requirement2.Group = requirementsGroup2;
-            requirementsGroup1.Group.Add(requirementsGroup2);
-            specification.Group.Add(requirementsGroup1);
-            specification.Requirement.Add(requirement0);
-            specification.Requirement.Add(requirement1);
-            specification.Requirement.Add(requirement2);
+            this.requirement1.Group = this.requirementsGroup1;
+            this.requirement2.Group = this.requirementsGroup2;
+            this.requirementsGroup1.Group.Add(this.requirementsGroup2);
+            specification.Group.Add(this.requirementsGroup1);
+            specification.Requirement.Add(this.requirement0);
+            specification.Requirement.Add(this.requirement1);
+            specification.Requirement.Add(this.requirement2);
 
             var definition0 = new Definition(Guid.NewGuid(), this.assembler.Cache, this.uri) { Content = "This is requirement definition 0" };
-            requirement0.Definition.Add(definition0);
+            this.requirement0.Definition.Add(definition0);
 
             var definition1 = new Definition(Guid.NewGuid(), this.assembler.Cache, this.uri) { Content = "This is requirement definition 1" };
-            requirement1.Definition.Add(definition1);
+            this.requirement1.Definition.Add(definition1);
 
             var definition2 = new Definition(Guid.NewGuid(), this.assembler.Cache, this.uri) { Content = "This is requirement definition 2" };
-            requirement2.Definition.Add(definition2);
+            this.requirement2.Definition.Add(definition2);
 
-            var reqidParameterType = new TextParameterType(Guid.Parse("14dcfc50-c410-4d8c-90ba-d8b3476f441e"), this.assembler.Cache, this.uri);
-            var riskParameterType = new EnumerationParameterType(Guid.Parse("6503c390-5e9f-403e-b25d-ebe194a8fd73"), this.assembler.Cache, this.uri);
-            var respParameterType = new EnumerationParameterType(Guid.Parse("7d936326-544e-4990-96cf-54f67f7aa365"), this.assembler.Cache, this.uri);
+            var codeParameterType = new TextParameterType(this.codeParameterTypeGuid, this.assembler.Cache, this.uri);
+            var enumerationParameterType1 = new EnumerationParameterType(this.enumerationParameterType1Guid, this.assembler.Cache, this.uri);
+            var enumerationParameterType2 = new EnumerationParameterType(this.enumerationParameterType2Guid, this.assembler.Cache, this.uri);
 
-            riskParameterType.ValueDefinition.Add(
+            enumerationParameterType1.ValueDefinition.Add(
                 new EnumerationValueDefinition(Guid.NewGuid(), this.assembler.Cache, this.uri)
                 {
                     Name = "Low",
                     ShortName = "L"
                 });
 
-            riskParameterType.ValueDefinition.Add(
+            enumerationParameterType1.ValueDefinition.Add(
                 new EnumerationValueDefinition(Guid.NewGuid(), this.assembler.Cache, this.uri)
                 {
                     Name = "Medium",
                     ShortName = "M"
                 });
 
-            riskParameterType.ValueDefinition.Add(
+            enumerationParameterType1.ValueDefinition.Add(
                 new EnumerationValueDefinition(Guid.NewGuid(), this.assembler.Cache, this.uri)
                 {
                     Name = "High",
                     ShortName = "H"
                 });
 
-            respParameterType.ValueDefinition.Add(
+            enumerationParameterType2.ValueDefinition.Add(
                 new EnumerationValueDefinition(Guid.NewGuid(), this.assembler.Cache, this.uri)
                 {
                     Name = "System Engineer",
                     ShortName = "SYS"
                 });
 
-            respParameterType.ValueDefinition.Add(
+            enumerationParameterType2.ValueDefinition.Add(
                 new EnumerationValueDefinition(Guid.NewGuid(), this.assembler.Cache, this.uri)
                 {
                     Name = "Power Engineer",
                     ShortName = "PWR"
                 });
 
-            respParameterType.ValueDefinition.Add(
-                new EnumerationValueDefinition(Guid.NewGuid(), this.assembler.Cache, this.uri)
-                {
-                    Name = "alexd",
-                    ShortName = "alexd"
-                });
-
             this.iteration.RequirementsSpecification.Add(specification);
 
-            requirement1.ParameterValue.Add(
+            this.requirement1.ParameterValue.Add(
                 new SimpleParameterValue(Guid.NewGuid(), this.assembler.Cache, this.uri)
                 {
-                    ParameterType = respParameterType,
-                    Value = new ValueArray<string>(new[] { respParameterType.ValueDefinition.First().Name })
+                    ParameterType = enumerationParameterType2,
+                    Value = new ValueArray<string>(new[] { enumerationParameterType2.ValueDefinition.First().Name })
                 });
 
-            requirement1.ParameterValue.Add(
+            this.requirement1.ParameterValue.Add(
                 new SimpleParameterValue(Guid.NewGuid(), this.assembler.Cache, this.uri)
                 {
-                    ParameterType = riskParameterType,
-                    Value = new ValueArray<string>(new[] { riskParameterType.ValueDefinition.First().Name })
+                    ParameterType = enumerationParameterType1,
+                    Value = new ValueArray<string>(new[] { enumerationParameterType1.ValueDefinition.First().Name })
                 });
 
-            requirement1.ParameterValue.Add(
+            this.requirement1.ParameterValue.Add(
                 new SimpleParameterValue(Guid.NewGuid(), this.assembler.Cache, this.uri)
                 {
-                    ParameterType = reqidParameterType,
+                    ParameterType = codeParameterType,
                     Value = new ValueArray<string>(new[] { "REQ.A01" })
                 });
 
             specification.ParameterValue.Add(
                 new RequirementsContainerParameterValue(Guid.NewGuid(), this.assembler.Cache, this.uri)
                 {
-                    ParameterType = reqidParameterType,
+                    ParameterType = codeParameterType,
                     Value = new ValueArray<string>(new[] { "SPEC.A01" })
                 });
         }
@@ -300,63 +302,98 @@ namespace DEHReqIF.Tests
 
             var targetReqIf = builder.Build(this.templateReqIF, this.iteration.RequirementsSpecification, this.exportSettings);
 
+            var reqifSerializer = new ReqIFSerializer();
+
+            var stream = new MemoryStream();
+            reqifSerializer.Serialize(targetReqIf, stream);
+
+            stream.Position = 0;
+            var reqIfXml = new StreamReader(stream).ReadToEnd();
+
             Assert.Multiple(() =>
             {
+                Assert.That(string.IsNullOrWhiteSpace(reqIfXml), Is.Not.True);
                 Assert.That(this.memoryTarget.Logs.Count, Is.EqualTo(0));
 
-                Assert.That(targetReqIf.TheHeader.RepositoryId, Is.EqualTo(@"EngineeringModel\71b700a5-b6e7-418e-a38f-ca6697a0e7e0\iteration\d82f4d39-3c5f-4d86-aad0-8eac9be2c6cc"));
+                Assert.That(targetReqIf.TheHeader.RepositoryId, Is.EqualTo(@$"EngineeringModel\{this.engineeringModelIid}\iteration\{this.iterationIid}"));
                 Assert.That(targetReqIf.TheHeader.ReqIFToolId, Is.EqualTo("RHEA DEH-REQIF"));
                 Assert.That(targetReqIf.TheHeader.ReqIFVersion, Is.EqualTo("1.2"));
                 Assert.That(targetReqIf.TheHeader.SourceToolId, Is.EqualTo("RHEA COMET"));
                 Assert.That(targetReqIf.TheHeader.Title, Is.EqualTo("This is a test ReqIF document"));
 
-                //Assert.That(targetReqIf.CoreContent.DataTypes.Count, Is.EqualTo(8));
-                Assert.That(targetReqIf.CoreContent.DataTypes.Count, Is.EqualTo(15));
+                Assert.That(targetReqIf.CoreContent.SpecRelations.Count, Is.EqualTo(0));
+                Assert.That(targetReqIf.CoreContent.SpecRelationGroups.Count, Is.EqualTo(0));
 
-                //Assert.That(targetReqIf.CoreContent.SpecTypes.Count, Is.EqualTo(3));
+                Assert.That(targetReqIf.CoreContent.DataTypes.Count, Is.EqualTo(6));
+
                 Assert.That(targetReqIf.CoreContent.SpecTypes.Count, Is.EqualTo(2));
                 Assert.That(targetReqIf.CoreContent.SpecTypes.OfType<SpecObjectType>().Count(), Is.EqualTo(1));
                 Assert.That(targetReqIf.CoreContent.SpecTypes.OfType<SpecificationType>().Count(), Is.EqualTo(1));
 
-                //Assert.That(targetReqIf.CoreContent.SpecTypes.OfType<SpecRelationType>().Count(), Is.EqualTo(1));
                 Assert.That(targetReqIf.CoreContent.SpecTypes.OfType<SpecRelationType>().Count(), Is.EqualTo(0));
                 Assert.That(targetReqIf.ToolExtension.Count, Is.EqualTo(1));
+                Assert.That(targetReqIf.CoreContent.SpecObjects.Count, Is.EqualTo(5));
+                Assert.That(targetReqIf.CoreContent.Specifications.Count, Is.EqualTo(1));
+                Assert.That(targetReqIf.CoreContent.Specifications.First().Children.Count, Is.EqualTo(2));
+
+                var specification = targetReqIf
+                    .CoreContent
+                    .Specifications
+                    .First();
+
+                var group1 =
+                    specification
+                        .Children
+                        .SingleOrDefault(x =>
+                            x.Object.LongName == this.requirementsGroup1.Name);
+
+                var group2 =
+                    group1?.Children
+                        .SingleOrDefault(x =>
+                            x.Object.LongName == this.requirementsGroup2.Name);
+
+                var req0 =
+                    specification
+                        .Children
+                        .SingleOrDefault(x => x.Object.LongName == this.requirement0.Name);
+
+                var req1 =
+                    group1?
+                        .Children
+                        .SingleOrDefault(x => x.Object.LongName == this.requirement1.Name);
+
+                var req2 =
+                    group2?
+                        .Children
+                        .SingleOrDefault(x => x.Object.LongName == this.requirement2.Name);
+
+                Assert.That(specification, Is.Not.Null);
+                Assert.That(specification.Values.Count, Is.EqualTo(3));
+                Assert.That(specification.Children.Count, Is.EqualTo(2));
+                Assert.That(specification.Values.Where(x => x.ObjectValue == null).Count, Is.EqualTo(0));
+
+                Assert.That(group1, Is.Not.Null);
+                Assert.That(group1.Children.Count, Is.EqualTo(2));
+                Assert.That(group1.Object.Values.Count, Is.EqualTo(3));
+                Assert.That(group1.Object.Values.Where(x => x.ObjectValue == null).Count, Is.EqualTo(0));
+
+                Assert.That(group2, Is.Not.Null);
+                Assert.That(group2.Children.Count, Is.EqualTo(1));
+                Assert.That(group2.Object.Values.Count, Is.EqualTo(3));
+                Assert.That(group2.Object.Values.Where(x => x.ObjectValue == null).Count, Is.EqualTo(0));
+
+                Assert.That(req0, Is.Not.Null);
+                Assert.That(req0.Object.Values.Count, Is.EqualTo(4));
+                Assert.That(req0.Object.Values.Where(x => x.ObjectValue == null).Count, Is.EqualTo(0));
+
+                Assert.That(req1, Is.Not.Null);
+                Assert.That(req1.Object.Values.Count, Is.EqualTo(8));
+                Assert.That(req1.Object.Values.Where(x => x.ObjectValue == null).Count, Is.EqualTo(0));
+
+                Assert.That(req2, Is.Not.Null);
+                Assert.That(req2.Object.Values.Count, Is.EqualTo(4));
+                Assert.That(req2.Object.Values.Where(x => x.ObjectValue == null).Count, Is.EqualTo(0));
             });
-
-            if (true)
-            {
-                var entryName = "output.reqif";
-                var reqifFileLocation = $"c:\\reqif\\{entryName}";
-                var reqifzFileLocation = $"{reqifFileLocation}z";
-
-                new ReqIFSerializer().Serialize(targetReqIf, "c:\\reqif\\output.reqif");
-
-                if (System.IO.File.Exists(reqifzFileLocation))
-                {
-                    System.IO.File.Delete(reqifzFileLocation);
-                }
-
-                using (var zipToOpen = new FileStream(reqifzFileLocation, FileMode.CreateNew))
-                {
-                    using (var archive = new ZipArchive(zipToOpen, ZipArchiveMode.Update))
-                    {
-                        archive.CreateEntryFromFile(reqifFileLocation, entryName);
-                    }
-                }
-            }
-            else
-            {
-                using (var stream = new MemoryStream())
-                {
-                    new ReqIFSerializer().Serialize(targetReqIf, stream);
-                    stream.Position = 0;
-
-                    using (var reader = new StreamReader(stream, Encoding.UTF8))
-                    {
-                        var test = reader.ReadToEnd();
-                    }
-                }
-            }
         }
 
         [Test]

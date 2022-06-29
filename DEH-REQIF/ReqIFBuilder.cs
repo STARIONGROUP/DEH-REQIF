@@ -23,6 +23,8 @@ namespace DEHReqIF
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text.RegularExpressions;
+    using System.Web;
 
     using CDP4Common.CommonData;
     using CDP4Common.EngineeringModelData;
@@ -181,6 +183,9 @@ namespace DEHReqIF
             this.targetReqIf.CoreContent.SpecObjects.Clear();
             this.targetReqIf.CoreContent.Specifications.Clear();
 
+            this.targetReqIf.CoreContent.SpecRelations.Clear();
+            this.targetReqIf.CoreContent.SpecRelationGroups.Clear();
+
             foreach (var requirementsSpecification in this.requirementsSpecifications)
             {
                 var specification = new Specification
@@ -199,11 +204,19 @@ namespace DEHReqIF
                 this.targetReqIf.CoreContent.Specifications.Add(specification);
                 specification.ReqIFContent = this.targetReqIf.CoreContent;
 
-                this.CreateSpecObjectAttributes(
-                    requirementsSpecification.ParameterValue.ToDictionary(x => x.ParameterType, x => x.Value),
-                    requirementsSpecification.Name,
-                    requirementsSpecification,
-                    specification);
+                try
+                {
+                    this.CreateSpecObjectAttributes(
+                        requirementsSpecification.ParameterValue.ToDictionary(x => x.ParameterType, x => x.Value),
+                        requirementsSpecification.Name,
+                        requirementsSpecification,
+                        specification);
+                }
+                catch (Exception)
+                {
+                    logger.Warn($"RequirementsSpecification {requirementsSpecification.ShortName} has errors.");
+                    throw;
+                }
 
                 foreach (var requirement in requirementsSpecification.Requirement.Where(x => x.Group == null))
                 {
@@ -226,15 +239,22 @@ namespace DEHReqIF
         /// <returns></returns>
         private SpecHierarchy ConvertRequirement(Requirement requirement)
         {
-            // Top level requirements
             var specObject = this.CreateSpecObject(requirement);
 
-            this.CreateSpecObjectAttributes(
-                requirement.ParameterValue.ToDictionary(x => x.ParameterType, x => x.Value),
-                requirement.Definition.FirstOrDefault()?.Content ?? string.Empty,
-                requirement,
-                specObject
-            );
+            try
+            {
+                this.CreateSpecObjectAttributes(
+                    requirement.ParameterValue.ToDictionary(x => x.ParameterType, x => x.Value),
+                    requirement.Definition.FirstOrDefault()?.Content ?? string.Empty,
+                    requirement,
+                    specObject
+                );
+            }
+            catch (Exception)
+            {
+                logger.Warn($"Requirement {requirement.ShortName} has errors.");
+                throw;
+            }
 
             return this.CreateSpecHierarchy(specObject);
         }
@@ -255,11 +275,19 @@ namespace DEHReqIF
 
             var childGroupSpecHierarcy = this.CreateSpecHierarchy(childGroupSpecObject);
 
-            this.CreateSpecObjectAttributes(
-                requirementsContainer.ParameterValue.ToDictionary(x => x.ParameterType, x => x.Value),
-                requirementsContainer.Name,
-                requirementsContainer,
-                childGroupSpecObject);
+            try
+            {
+                this.CreateSpecObjectAttributes(
+                    requirementsContainer.ParameterValue.ToDictionary(x => x.ParameterType, x => x.Value),
+                    requirementsContainer.Name,
+                    requirementsContainer,
+                    childGroupSpecObject);
+            }
+            catch (Exception)
+            {
+                logger.Warn($"RequirementsGroup {requirementsContainer.ShortName} has errors.");
+                throw;
+            }
 
             foreach (var requirement in requirements.Where(
                          x => x.Group == (requirementsContainer is RequirementsSpecification ? null : requirementsContainer)))
@@ -341,30 +369,38 @@ namespace DEHReqIF
 
             foreach (var keyValuePair in parameterTypesAndValues)
             {
-                var specTypeAttributeDefinitionId =
+                var specTypeAttributeDefinitionIds =
                     this.exportSettings
                         .ExternalIdentifierMap
                         .Correspondence
-                        .SingleOrDefault(x => x.InternalThing == keyValuePair.Key.Iid);
+                        .Where(x => x.InternalThing == keyValuePair.Key.Iid)
+                        .ToList();
 
-                if (specTypeAttributeDefinitionId != null)
+                if (specTypeAttributeDefinitionIds.Any())
                 {
-                    var specAttributes = specObject is Specification ? this.specificationType as SpecType : this.specObjectType;
-
-                    var specTypeAttributeDefinition =
-                        specAttributes.SpecAttributes.SingleOrDefault(x => x.Identifier == specTypeAttributeDefinitionId.ExternalId);
-
-                    if (specTypeAttributeDefinition != null)
+                    foreach (var specTypeAttributeDefinitionId in specTypeAttributeDefinitionIds)
                     {
-                        var attributeValue = this.CreateAttributeValue(specTypeAttributeDefinition);
-                        attributeValue.AttributeDefinition = specTypeAttributeDefinition;
+                        var specAttributes = specObject is Specification ? this.specificationType as SpecType : this.specObjectType;
 
-                        if (!SetAttributeValueValue(keyValuePair.Key, keyValuePair.Value, specTypeAttributeDefinition, attributeValue))
+                        var specTypeAttributeDefinitions =
+                            specAttributes.SpecAttributes.Where(x => x.Identifier == specTypeAttributeDefinitionId.ExternalId)
+                                .ToList();
+
+                        if (specTypeAttributeDefinitions.Any())
                         {
-                            continue;
-                        }
+                            foreach (var specTypeAttributeDefinition in specTypeAttributeDefinitions)
+                            {
+                                var attributeValue = this.CreateAttributeValue(specTypeAttributeDefinition);
+                                attributeValue.AttributeDefinition = specTypeAttributeDefinition;
 
-                        specObject.Values.Add(attributeValue);
+                                if (!this.SetAttributeValueValue(keyValuePair.Key, keyValuePair.Value, specTypeAttributeDefinition, attributeValue))
+                                {
+                                    continue;
+                                }
+
+                                specObject.Values.Add(attributeValue);
+                            }
+                        }
                     }
                 }
             }
@@ -379,7 +415,7 @@ namespace DEHReqIF
         /// <param name="attributeValue">The <see cref="AttributeValue"/></param>
         /// <returns>True if the value was set, otherwise false</returns>
         /// <exception cref="NotSupportedException">Throws if the <see cref="ParameterType"/> is not supported.</exception>
-        private static bool SetAttributeValueValue(ParameterType parameterType, ValueArray<string> valueArray, AttributeDefinition attributeDefinition, AttributeValue attributeValue)
+        private bool SetAttributeValueValue(ParameterType parameterType, ValueArray<string> valueArray, AttributeDefinition attributeDefinition, AttributeValue attributeValue)
         {
             var value = valueArray.First();
             
@@ -422,7 +458,22 @@ namespace DEHReqIF
                     break;
 
                 case TextParameterType :
-                    attributeValue.ObjectValue = value.ToValueSetObject(parameterType);
+
+                    var objectValue = value.ToValueSetObject(parameterType).ToString();
+
+                    if (this.exportSettings.AddXHTMLtags)
+                    {
+                        if (!objectValue.ToLower().Contains("<reqif-xhtml:div>"))
+                        {
+                            objectValue = $"<reqif-xhtml:div>{objectValue}</reqif-xhtml:div>";
+                        }
+                    }
+                    else
+                    {
+                        objectValue = Regex.Replace(HttpUtility.HtmlDecode(objectValue), "<[\\/a-zA-Z0-9= \"\\\"'\'#;:()$_-]*?>", string.Empty);
+                    }
+
+                    attributeValue.ObjectValue = objectValue;
                     break;
 
                 default:

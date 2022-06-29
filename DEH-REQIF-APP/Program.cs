@@ -29,8 +29,10 @@ namespace DEHReqIF.Console
     using DEHReqIF.Services;
 
     using Microsoft.Extensions.CommandLineUtils;
+    using Microsoft.Extensions.Configuration;
 
     using NLog;
+    using NLog.Extensions.Logging;
 
     using ReqIFSharp;
     using ReqIFSharp.Extensions.Services;
@@ -55,6 +57,13 @@ namespace DEHReqIF.Console
         /// <param name="args">The arguments</param>
         public static void Main(string[] args)
         {
+            var config = new ConfigurationBuilder()
+                .SetBasePath(System.IO.Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .Build();
+
+            LogManager.Configuration = new NLogLoggingConfiguration(config.GetSection("NLog"));
+
             Container = ConfigureContainer();
 
             ConfigureCommandLineApplication(args);
@@ -75,7 +84,10 @@ namespace DEHReqIF.Console
             builder.RegisterType<ResourceLoader>().As<IResourceLoader>();
             builder.RegisterType<ReqIFDeserializer>().As<IReqIFDeSerializer>();
             builder.RegisterType<ReqIFLoaderService>().As<IReqIFLoaderService>();
+            builder.RegisterType<SessionDataRetriever>().As<ISessionDataRetriever>();
+            builder.RegisterType<ReqIfFileWriter>().As<IReqIfFileWriter>();
             builder.RegisterType<ExportSettingsReader>().As<IExportSettingsReader>();
+            builder.RegisterType<TemplateBasedReqIfBuilder>().As<ITemplateBasedReqIfBuilder>();
             builder.RegisterType<ConvertCommand>().As<IConvertCommand>();
             builder.RegisterType<ConvertCommandFactory>().As<IConvertCommandFactory>();
 

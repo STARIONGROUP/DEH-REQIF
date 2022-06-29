@@ -10,7 +10,6 @@
 	<RootNamespace>DEHReqIF.Tests</RootNamespace>
     <IsPackable>false</IsPackable>
     <LangVersion>latest</LangVersion>
-	<UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>
 
   <ItemGroup>
@@ -38,7 +37,7 @@
     <None Update="TestData\export-settings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="TestData\ProR_Traceability-Template-v1.0.reqif">
+    <None Update="TestData\test.reqif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

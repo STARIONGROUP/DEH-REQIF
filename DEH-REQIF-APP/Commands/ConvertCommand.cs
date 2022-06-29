@@ -22,17 +22,9 @@ namespace DEHReqIF.Console.Commands
 {
     using System;
     using System.Diagnostics;
-    using System.IO;
-    using System.IO.Compression;
-    using System.Linq;
-    using System.Threading;
     using System.Threading.Tasks;
 
-    using CDP4Common.EngineeringModelData;
-    using CDP4Common.SiteDirectoryData;
-
     using CDP4Dal;
-    using CDP4Dal.DAL;
 
     using DEHReqIF.ExportSettings;
     using DEHReqIF.Services;
@@ -40,7 +32,6 @@ namespace DEHReqIF.Console.Commands
     using NLog;
 
     using ReqIFSharp;
-    using ReqIFSharp.Extensions.Services;
 
     /// <summary>
     /// The purpose of the <see cref="ConvertCommand"/> is to convert an ECSS-E-TM-10-25 requirements set
@@ -54,28 +45,48 @@ namespace DEHReqIF.Console.Commands
         private static ILogger logger = LogManager.GetCurrentClassLogger();
 
         /// <summary>
-        /// The (injected) <see cref="IReqIFLoaderService"/> used to read a ReqIF document
-        /// </summary>
-        private readonly IReqIFLoaderService reqIfLoaderService;
-
-        /// <summary>
         /// The (injected) <see cref="IExportSettingsReader"/> used to read export settings
         /// </summary>
         private readonly IExportSettingsReader exportSettingsReader;
 
         /// <summary>
+        /// The (injected) <see cref="ISessionDataRetriever"/> used to read session data
+        /// </summary>
+        private readonly ISessionDataRetriever sessionDataRetriever;
+
+        /// <summary>
+        /// The (injected) <see cref="IReqIfFileWriter"/> used to read session data
+        /// </summary>
+        private readonly IReqIfFileWriter reqifFileWriter;
+
+        /// <summary>
+        /// The (injected) <see cref="ITemplateBasedReqIfBuilder"/> used to read session data
+        /// </summary>
+        private readonly ITemplateBasedReqIfBuilder templateBasedReqIfBuilder;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ConvertCommand"/>
         /// </summary>
-        /// <param name="reqIfLoaderService">
-        /// The (injected) <see cref="IReqIFLoaderService"/> used to read a ReqIF document
-        /// </param>
         /// <param name="exportSettingsReader">
         /// The (injected) <see cref="IExportSettingsReader"/> used to read the export settings file
         /// </param>
-        public ConvertCommand(IReqIFLoaderService reqIfLoaderService, IExportSettingsReader exportSettingsReader)
+        /// <param name="sessionDataRetriever">
+        /// The (injected) <see cref="ISessionDataRetriever"/> used to read the necessary data from a data source
+        /// </param>
+        /// <param name="reqifFileWriter">
+        /// The (injected) <see cref="IReqIfFileWriter"/> used to write the <see cref="ReqIF"/> document to files (reqif and reqifz)
+        /// </param>
+        /// <param name="templateBasedReqIfBuilder"></param>
+        public ConvertCommand(
+            IExportSettingsReader exportSettingsReader,
+            ISessionDataRetriever sessionDataRetriever,
+            IReqIfFileWriter reqifFileWriter,
+            ITemplateBasedReqIfBuilder templateBasedReqIfBuilder)
         {
-            this.reqIfLoaderService = reqIfLoaderService;
             this.exportSettingsReader = exportSettingsReader;
+            this.sessionDataRetriever = sessionDataRetriever;
+            this.reqifFileWriter = reqifFileWriter;
+            this.templateBasedReqIfBuilder = templateBasedReqIfBuilder;
         }
 
         /// <summary>
@@ -104,21 +115,6 @@ namespace DEHReqIF.Console.Commands
         public string TargetReqIF { get; set; }
 
         /// <summary>
-        /// The location of the to be created reqif file
-        /// </summary>
-        private string TargetReqIFLocation => Path.ChangeExtension(this.TargetReqIF, ".reqif");
-
-        /// <summary>
-        /// The location of the to be created reqifz file
-        /// </summary>
-        private string TargetReqIFzLocation => Path.ChangeExtension(this.TargetReqIF, ".reqifz");
-
-        /// <summary>
-        /// The name of the entry in the reqifz (zip) file
-        /// </summary>
-        private string EntryName => new FileInfo(this.TargetReqIFLocation).Name;
-
-        /// <summary>
         /// The ShortName of the EngineeringModelSetup
         /// </summary>
         public string EngineeringModelIid { get; set; }
@@ -133,10 +129,10 @@ namespace DEHReqIF.Console.Commands
         /// </summary>
         public async Task ExecuteAsync()
         {
-            var sw = Stopwatch.StartNew();
-
             try
             {
+                var sw = Stopwatch.StartNew();
+
                 var session = await this.OpenSessionAndRetrieveData();
                 var exportSettings = await this.exportSettingsReader.ReadFile(this.ExportSettings);
                 var targetReqIf = await this.BuildReqIf(session, exportSettings);
@@ -156,30 +152,37 @@ namespace DEHReqIF.Console.Commands
         }
 
         /// <summary>
+        /// Open the <see cref="Session"/> and retrieve the wanted data
+        /// </summary>
+        /// <returns>An awaitable <see cref="Task"/> of type <see cref="ISession"/></returns>
+        private async Task<ISession> OpenSessionAndRetrieveData()
+        {
+            var sw = Stopwatch.StartNew();
+
+            var session =
+                await this.sessionDataRetriever
+                    .OpenSessionAndRetrieveData(this.Username, this.Password, this.DataSource, Guid.Parse(this.EngineeringModelIid));
+
+            logger.Info($"Session was opened and data was read in {sw.ElapsedMilliseconds} [ms]");
+
+            return session;
+        }
+
+        /// <summary>
         /// Build the ReqIf document
         /// </summary>
         /// <param name="session">The <see cref="ISession"/></param>
-        /// <param name="exportSettings"></param>
+        /// <param name="exportSettings">The <see cref="ExportSettings"/></param>
         /// <returns>An awaitable <see cref="Task{T}"/> of type <see cref="ReqIF"/></returns>
         private async Task<ReqIF> BuildReqIf(ISession session, ExportSettings exportSettings)
         {
             var sw = Stopwatch.StartNew();
 
-            await using var fileStream = new FileStream(this.TemplateSource, FileMode.Open);
-
-            await this.reqIfLoaderService.Load(fileStream, new CancellationToken());
-
-            var templateReqIF = this.reqIfLoaderService.ReqIFData.Single();
-
-            logger.Info($"{this.TemplateSource} read in {sw.ElapsedMilliseconds} [ms]");
-            sw.Restart();
-
-            var builder = new ReqIFBuilder();
-            var targetReqIf = builder.Build(templateReqIF, session.OpenIterations.First().Key.RequirementsSpecification, exportSettings);
+            var targetReqIF = await this.templateBasedReqIfBuilder.Build(this.TemplateSource, session, exportSettings);
 
             logger.Info($"Target ReqIf was built in {sw.ElapsedMilliseconds} [ms]");
 
-            return targetReqIf;
+            return targetReqIF;
         }
 
         /// <summary>
@@ -191,74 +194,9 @@ namespace DEHReqIF.Console.Commands
         {
             var sw = Stopwatch.StartNew();
 
-            if (System.IO.File.Exists(this.TargetReqIFLocation))
-            {
-                System.IO.File.Delete(this.TargetReqIFLocation);
-            }
-
-            await new ReqIFSerializer().SerializeAsync(targetReqIf, this.TargetReqIFLocation, new CancellationToken());
-
-            if (System.IO.File.Exists(this.TargetReqIFzLocation))
-            {
-                System.IO.File.Delete(this.TargetReqIFzLocation);
-            }
-
-            using (var zipToOpen = new FileStream(this.TargetReqIFzLocation, FileMode.CreateNew))
-            {
-                using (var archive = new ZipArchive(zipToOpen, ZipArchiveMode.Update))
-                {
-                    archive.CreateEntryFromFile(this.TargetReqIFLocation, this.EntryName);
-                }
-            }
+            await this.reqifFileWriter.WriteReqIfFiles(targetReqIf, this.TargetReqIF);
 
             logger.Info($"ReqIf was created in {sw.ElapsedMilliseconds} [ms]");
-        }
-
-        /// <summary>
-        /// Open the <see cref="Session"/> and retrieve the wanted data
-        /// </summary>
-        /// <returns>An awaitable <see cref="Task"/> of type <see cref="ISession"/></returns>
-        private async Task<ISession> OpenSessionAndRetrieveData()
-        {
-            var sw = Stopwatch.StartNew();
-
-            var dal = new CDP4ServicesDal.CdpServicesDal();
-            var credentials = new Credentials(this.Username, this.Password, new Uri(this.DataSource));
-
-            var session = new Session(dal, credentials);
-            await session.Open(false);
-
-            var siteDirectory = session.RetrieveSiteDirectory();
-
-            await session.Read(siteDirectory.SiteReferenceDataLibrary.First());
-
-            var engineeringModelSetup = siteDirectory.Model.First(x => x.EngineeringModelIid == Guid.Parse(this.EngineeringModelIid));
-
-            var iterationIid = engineeringModelSetup.IterationSetup.OrderByDescending(x => x.IterationNumber).First(x => !x.IsDeleted).IterationIid;
-
-            var model = new EngineeringModel(engineeringModelSetup.EngineeringModelIid, session.Assembler.Cache, session.Credentials.Uri)
-                { EngineeringModelSetup = engineeringModelSetup };
-
-            var iteration = new Iteration(iterationIid, session.Assembler.Cache, session.Credentials.Uri);
-
-            model.Iteration.Add(iteration);
-
-            DomainOfExpertise initialDomain;
-
-            if (session.ActivePerson.DefaultDomain != null && engineeringModelSetup.ActiveDomain.Contains(session.ActivePerson.DefaultDomain))
-            {
-                initialDomain = session.ActivePerson.DefaultDomain;
-            }
-            else
-            {
-                initialDomain = engineeringModelSetup.ActiveDomain.FirstOrDefault();
-            }
-
-            await session.Read(iteration, initialDomain);
-
-            logger.Info($"Session was opened and data was read in {sw.ElapsedMilliseconds} [ms]");
-
-            return session;
         }
     }
 }

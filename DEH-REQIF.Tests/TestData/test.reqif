@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<REQ-IF xmlns="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd" xmlns:configuration="http://eclipse.org/rmf/pror/toolextensions/1.0" xmlns:id="http://pror.org/presentation/id" xmlns:linkmanagement="http://formalmind.com/pror/presentation/linkmanagement" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <THE-HEADER>
+    <REQ-IF-HEADER IDENTIFIER="_Header">
+      <COMMENT>Template</COMMENT>
+      <CREATION-TIME>2022-06-29T11:37:50.954+01:00</CREATION-TIME>
+      <REQ-IF-TOOL-ID>Handcoded stuff</REQ-IF-TOOL-ID>
+      <REQ-IF-VERSION>1.0</REQ-IF-VERSION>
+      <SOURCE-TOOL-ID>Visual Studio</SOURCE-TOOL-ID>
+      <TITLE>Test Template</TITLE>
+    </REQ-IF-HEADER>
+  </THE-HEADER>
+  <CORE-CONTENT>
+    <REQ-IF-CONTENT>
+      <DATATYPES>
+        <DATATYPE-DEFINITION-ENUMERATION IDENTIFIER="_EnumerationParameterType2" LAST-CHANGE="2022-03-01T09:50:00" LONG-NAME="Enumeration2">
+          <SPECIFIED-VALUES>
+            <ENUM-VALUE IDENTIFIER="_Enum2Value1" LAST-CHANGE="2022-03-01T09:50:00" LONG-NAME="System Engineer">
+            </ENUM-VALUE>
+            <ENUM-VALUE IDENTIFIER="_Enum2Value2" LAST-CHANGE="2022-03-01T09:50:00" LONG-NAME="Power Engineer">
+            </ENUM-VALUE>
+          </SPECIFIED-VALUES>
+        </DATATYPE-DEFINITION-ENUMERATION>
+        <DATATYPE-DEFINITION-XHTML IDENTIFIER="_TextParameterType" LAST-CHANGE="2022-03-01T09:50:00" LONG-NAME="Text" />
+        <DATATYPE-DEFINITION-XHTML IDENTIFIER="_StringParameterType" LAST-CHANGE="2022-03-01T09:50:00" LONG-NAME="String" />
+        <DATATYPE-DEFINITION-DATE IDENTIFIER="_DateParameterType" LAST-CHANGE="2022-03-01T09:50:00" LONG-NAME="Date" />
+        <DATATYPE-DEFINITION-ENUMERATION IDENTIFIER="_EnumerationParameterType1" LAST-CHANGE="2022-03-01T09:50:00" LONG-NAME="Enumeration1">
+          <SPECIFIED-VALUES>
+            <ENUM-VALUE IDENTIFIER="_Enum1Value1" LAST-CHANGE="2022-03-01T09:50:00" LONG-NAME="Low">
+            </ENUM-VALUE>
+            <ENUM-VALUE IDENTIFIER="_Enum1Value2" LAST-CHANGE="2022-03-01T09:50:00" LONG-NAME="Medium">
+            </ENUM-VALUE>
+            <ENUM-VALUE IDENTIFIER="_Enum1Value3" LAST-CHANGE="2022-03-01T09:50:00" LONG-NAME="High">
+            </ENUM-VALUE>
+          </SPECIFIED-VALUES>
+        </DATATYPE-DEFINITION-ENUMERATION>
+        <DATATYPE-DEFINITION-BOOLEAN IDENTIFIER="_BooleanParameterType" LAST-CHANGE="2022-03-01T09:50:00" LONG-NAME="Boolean" />
+      </DATATYPES>
+      <SPEC-TYPES>
+        <SPEC-OBJECT-TYPE IDENTIFIER="_RequirementAndRequirementsGroupType" LAST-CHANGE="2016-11-10T16:37:50.954+01:00" LONG-NAME="Requirement Type">
+          <SPEC-ATTRIBUTES>
+            <ATTRIBUTE-DEFINITION-XHTML IDENTIFIER="_TextParameter" LAST-CHANGE="2016-11-10T16:37:50.954+01:00" LONG-NAME="ReqIF.Text">
+              <TYPE>
+                <DATATYPE-DEFINITION-XHTML-REF>_TextParameterType</DATATYPE-DEFINITION-XHTML-REF>
+              </TYPE>
+            </ATTRIBUTE-DEFINITION-XHTML>
+	          <ATTRIBUTE-DEFINITION-XHTML IDENTIFIER="_NameParameter" LAST-CHANGE="2016-11-10T16:37:50.954+01:00" LONG-NAME="ReqIF.Name">
+		          <TYPE>
+			          <DATATYPE-DEFINITION-XHTML-REF>_TextParameterType</DATATYPE-DEFINITION-XHTML-REF>
+		          </TYPE>
+	          </ATTRIBUTE-DEFINITION-XHTML>
+	        <ATTRIBUTE-DEFINITION-ENUMERATION MULTI-VALUED="false" IDENTIFIER="_EnumerationParameter1" LAST-CHANGE="1970-01-01T00:00:00" LONG-NAME="Enum 1" IS-EDITABLE="true">
+		      <TYPE>
+			      <DATATYPE-DEFINITION-ENUMERATION-REF>_EnumerationParameterType1</DATATYPE-DEFINITION-ENUMERATION-REF>
+		      </TYPE>
+	        </ATTRIBUTE-DEFINITION-ENUMERATION>
+	        <ATTRIBUTE-DEFINITION-ENUMERATION MULTI-VALUED="false" IDENTIFIER="_EnumerationParameter2" LAST-CHANGE="1970-01-01T00:00:00" LONG-NAME="Enum 2" IS-EDITABLE="true">
+		      <TYPE>
+			    <DATATYPE-DEFINITION-ENUMERATION-REF>_EnumerationParameterType2</DATATYPE-DEFINITION-ENUMERATION-REF>
+		      </TYPE>
+	        </ATTRIBUTE-DEFINITION-ENUMERATION>
+	          <ATTRIBUTE-DEFINITION-BOOLEAN IDENTIFIER="Pseudo-ForeignDeleted" LAST-CHANGE="2022-03-22T12:57:20" LONG-NAME="ReqIF.ForeignDeleted">
+		          <TYPE>
+			          <DATATYPE-DEFINITION-BOOLEAN-REF>_BooleanParameterType</DATATYPE-DEFINITION-BOOLEAN-REF>
+		          </TYPE>
+	          </ATTRIBUTE-DEFINITION-BOOLEAN>
+	          <ATTRIBUTE-DEFINITION-DATE DESC="System Attribute" IDENTIFIER="LASTMODIFIEDON" LAST-CHANGE="1970-01-01T00:00:00" LONG-NAME="ForeignModifiedOn" IS-EDITABLE="true">
+		          <TYPE>
+			          <DATATYPE-DEFINITION-DATE-REF>_DateParameterType</DATATYPE-DEFINITION-DATE-REF>
+		          </TYPE>
+	          </ATTRIBUTE-DEFINITION-DATE>
+	          <ATTRIBUTE-DEFINITION-XHTML IDENTIFIER="_IdInSource1" LAST-CHANGE="1970-01-01T00:00:00" LONG-NAME="Source ID 1" IS-EDITABLE="true">
+		          <TYPE>
+			          <DATATYPE-DEFINITION-XHTML-REF>_TextParameterType</DATATYPE-DEFINITION-XHTML-REF>
+		          </TYPE>
+	          </ATTRIBUTE-DEFINITION-XHTML>
+	          <ATTRIBUTE-DEFINITION-XHTML IDENTIFIER="_IdInSource2" LAST-CHANGE="1970-01-01T00:00:00" LONG-NAME="Source ID 2" IS-EDITABLE="true">
+		          <TYPE>
+			          <DATATYPE-DEFINITION-XHTML-REF>_TextParameterType</DATATYPE-DEFINITION-XHTML-REF>
+		          </TYPE>
+	          </ATTRIBUTE-DEFINITION-XHTML>
+          </SPEC-ATTRIBUTES>
+        </SPEC-OBJECT-TYPE>
+        <SPECIFICATION-TYPE IDENTIFIER="_specification" LAST-CHANGE="2016-11-10T16:37:50.954+01:00" LONG-NAME="Specification Type">
+	      <SPEC-ATTRIBUTES>
+		    <ATTRIBUTE-DEFINITION-XHTML IDENTIFIER="_NameParameterSpecification" LAST-CHANGE="2016-11-10T16:37:50.954+01:00" LONG-NAME="ReqIF.Name">
+			  <TYPE>
+			    <DATATYPE-DEFINITION-XHTML-REF>_TextParameterType</DATATYPE-DEFINITION-XHTML-REF>
+			  </TYPE>
+		    </ATTRIBUTE-DEFINITION-XHTML>
+		    <ATTRIBUTE-DEFINITION-XHTML IDENTIFIER="_TextParameterSpecification" LAST-CHANGE="2016-11-10T16:37:50.954+01:00" LONG-NAME="ReqIF.Text">
+			  <TYPE>
+			    <DATATYPE-DEFINITION-XHTML-REF>_TextParameterType</DATATYPE-DEFINITION-XHTML-REF>
+			  </TYPE>
+		    </ATTRIBUTE-DEFINITION-XHTML>
+		      <ATTRIBUTE-DEFINITION-XHTML IDENTIFIER="_IdInSourceSpecification" LAST-CHANGE="1970-01-01T00:00:00" LONG-NAME="Source ID" IS-EDITABLE="true">
+			      <TYPE>
+				      <DATATYPE-DEFINITION-XHTML-REF>_TextParameterType</DATATYPE-DEFINITION-XHTML-REF>
+			      </TYPE>
+		      </ATTRIBUTE-DEFINITION-XHTML>
+          </SPEC-ATTRIBUTES>
+        </SPECIFICATION-TYPE>
+      </SPEC-TYPES>
+      <SPEC-OBJECTS>
+        <SPEC-OBJECT IDENTIFIER="_SpecObject1" LAST-CHANGE="2016-11-10T16:39:20.832+01:00">
+          <VALUES>
+	          <ATTRIBUTE-VALUE-XHTML>
+		          <DEFINITION>
+			          <ATTRIBUTE-DEFINITION-XHTML-REF>_TextParameter</ATTRIBUTE-DEFINITION-XHTML-REF>
+		          </DEFINITION>
+		          <THE-VALUE>This is requirement definition 1</THE-VALUE>
+	          </ATTRIBUTE-VALUE-XHTML>
+	          <ATTRIBUTE-VALUE-XHTML>
+		          <DEFINITION>
+			          <ATTRIBUTE-DEFINITION-XHTML-REF>_NameParameter</ATTRIBUTE-DEFINITION-XHTML-REF>
+		          </DEFINITION>
+		          <THE-VALUE>This is name 1</THE-VALUE>
+	          </ATTRIBUTE-VALUE-XHTML>
+          </VALUES>
+          <TYPE>
+            <SPEC-OBJECT-TYPE-REF>_RequirementAndRequirementsGroupType</SPEC-OBJECT-TYPE-REF>
+          </TYPE>
+        </SPEC-OBJECT>
+	      <SPEC-OBJECT IDENTIFIER="_SpecObject2" LAST-CHANGE="2016-11-10T16:39:20.832+01:00">
+		      <VALUES>
+			      <ATTRIBUTE-VALUE-XHTML>
+				      <DEFINITION>
+					      <ATTRIBUTE-DEFINITION-XHTML-REF>_TextParameter</ATTRIBUTE-DEFINITION-XHTML-REF>
+				      </DEFINITION>
+				      <THE-VALUE>This is requirement definition 2</THE-VALUE>
+			      </ATTRIBUTE-VALUE-XHTML>
+			      <ATTRIBUTE-VALUE-XHTML>
+				      <DEFINITION>
+					      <ATTRIBUTE-DEFINITION-XHTML-REF>_NameParameter</ATTRIBUTE-DEFINITION-XHTML-REF>
+				      </DEFINITION>
+				      <THE-VALUE>This is name 2</THE-VALUE>
+			      </ATTRIBUTE-VALUE-XHTML>
+		      </VALUES>
+		      <TYPE>
+			      <SPEC-OBJECT-TYPE-REF>_RequirementAndRequirementsGroupType</SPEC-OBJECT-TYPE-REF>
+		      </TYPE>
+	      </SPEC-OBJECT>
+      </SPEC-OBJECTS>
+      <SPEC-RELATIONS>
+      </SPEC-RELATIONS>
+      <SPECIFICATIONS>
+        <SPECIFICATION IDENTIFIER="_Specification" LAST-CHANGE="2016-11-10T16:38:49.823+01:00" LONG-NAME="Requirements Document">
+          <VALUES>
+            <ATTRIBUTE-VALUE-XHTML>
+              <DEFINITION>
+                <ATTRIBUTE-DEFINITION-XHTML-REF>_TextParameterSpecification</ATTRIBUTE-DEFINITION-XHTML-REF>
+              </DEFINITION>
+              <THE-VALUE>
+                <xhtml:div>This is spec 1</xhtml:div>
+              </THE-VALUE>
+            </ATTRIBUTE-VALUE-XHTML>
+	          <ATTRIBUTE-VALUE-XHTML>
+		          <DEFINITION>
+			          <ATTRIBUTE-DEFINITION-XHTML-REF>_NameParameterSpecification</ATTRIBUTE-DEFINITION-XHTML-REF>
+		          </DEFINITION>
+		          <THE-VALUE>
+			          <xhtml:div>Spec 1</xhtml:div>
+		          </THE-VALUE>
+	          </ATTRIBUTE-VALUE-XHTML>
+          </VALUES>
+          <TYPE>
+            <SPECIFICATION-TYPE-REF>_specification</SPECIFICATION-TYPE-REF>
+          </TYPE>
+        </SPECIFICATION>
+      </SPECIFICATIONS>
+    </REQ-IF-CONTENT>
+  </CORE-CONTENT>
+  <TOOL-EXTENSIONS>
+    <REQ-IF-TOOL-EXTENSION>
+      <configuration:ProrToolExtension>
+        <configuration:specViewConfigurations>
+          <configuration:ProrSpecViewConfiguration specification="_o7scS6dbEeafNduaIhMwQg">
+            <configuration:columns>
+              <configuration:Column label="ReqIF.ForeignID" width="77"/>
+              <configuration:UnifiedColumn label="Main" width="305"/>
+              <configuration:Column label="S" width="29"/>
+              <configuration:Column label="T" width="29"/>
+            </configuration:columns>
+            <configuration:leftHeaderColumn>
+              <configuration:Column label="Lead Header Column" width="30"/>
+            </configuration:leftHeaderColumn>
+          </configuration:ProrSpecViewConfiguration>
+          <configuration:ProrSpecViewConfiguration specification="_zCEPQKdbEeafNduaIhMwQg">
+            <configuration:columns>
+              <configuration:Column label="ReqIF.ForeignID" width="100"/>
+              <configuration:UnifiedColumn label="Main" width="277"/>
+              <configuration:Column label="S" width="32"/>
+              <configuration:Column label="T" width="33"/>
+            </configuration:columns>
+            <configuration:leftHeaderColumn>
+              <configuration:Column label="Lead Header Column" width="30"/>
+            </configuration:leftHeaderColumn>
+          </configuration:ProrSpecViewConfiguration>
+        </configuration:specViewConfigurations>
+        <configuration:generalConfiguration>
+          <configuration:ProrGeneralConfiguration>
+            <configuration:labelConfiguration>
+              <configuration:LabelConfiguration>
+                <defaultLabel>ReqIF.ChapterName</defaultLabel>
+                <defaultLabel>ReqIF.Name</defaultLabel>
+                <defaultLabel>ReqIF.ForeignID</defaultLabel>
+                <defaultLabel>ReqIF.Text</defaultLabel>
+              </configuration:LabelConfiguration>
+            </configuration:labelConfiguration>
+          </configuration:ProrGeneralConfiguration>
+        </configuration:generalConfiguration>
+        <configuration:presentationConfigurations>
+          <configuration:ProrPresentationConfigurations>
+            <configuration:presentationConfigurations>
+              <id:IdConfiguration datatype="_o7scNKdbEeafNduaIhMwQg" prefix="REQ-" count="21"/>
+              <id:IdConfiguration datatype="_o7scOadbEeafNduaIhMwQg" prefix="LNK-" count="9"/>
+              <linkmanagement:LinkmanagementConfiguration datatype="_GnTekKdeEeafNduaIhMwQg" linkRelationType="_o7scQKdbEeafNduaIhMwQg" sourceStatus="_K4SyoKdeEeafNduaIhMwQg" targetStatus="_M-u6sKdeEeafNduaIhMwQg"/>
+            </configuration:presentationConfigurations>
+          </configuration:ProrPresentationConfigurations>
+        </configuration:presentationConfigurations>
+      </configuration:ProrToolExtension>
+    </REQ-IF-TOOL-EXTENSION>
+  </TOOL-EXTENSIONS></REQ-IF>

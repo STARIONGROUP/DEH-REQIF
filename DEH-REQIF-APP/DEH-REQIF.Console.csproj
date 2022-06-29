@@ -26,6 +26,7 @@
 	<ItemGroup>
 		<PackageReference Include="Autofac" Version="6.4.0" />
 		<PackageReference Include="CDP4ServicesDal-CE" Version="8.1.0" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Json" />
 		<PackageReference Update="Microsoft.Extensions.Configuration.FileExtensions" Version="6.0.0" />
 		<PackageReference Update="Microsoft.Extensions.Configuration.Json" Version="6.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.1" />

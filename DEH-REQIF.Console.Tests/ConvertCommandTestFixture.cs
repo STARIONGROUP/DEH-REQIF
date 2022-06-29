@@ -20,67 +20,92 @@
 
 namespace DEHReqIF.Console.Tests
 {
-    using System.IO;
+    using System;
     using System.Threading.Tasks;
 
+    using CDP4Dal;
+
     using DEHReqIF.Console.Commands;
+    using DEHReqIF.ExportSettings;
     using DEHReqIF.Services;
+
+    using Moq;
 
     using NLog;
 
     using NUnit.Framework;
 
     using ReqIFSharp;
-    using ReqIFSharp.Extensions.Services;
 
     /// <summary>
     /// Suite of tests for the <see cref="ConvertCommand"/>
     /// </summary>
     public class ConvertCommandTestFixture
     {
-        private string reqifPath;
-
         private ConvertCommand convertCommand;
 
-        private ReqIFLoaderService reqIFLoaderService;
+        private Mock<IExportSettingsReader> exportSettingsReader;
 
-        private string exportSettingsPath;
+        private Mock<IReqIfFileWriter> fileWriter;
 
-        private ExportSettingsReader exportSettingsReader;
+        private Mock<ISessionDataRetriever> sessionDataRetriever;
+
+        private Mock<ITemplateBasedReqIfBuilder> templateBasedReqIfBuilder;
 
         [SetUp]
         public void Setup()
         {
             LogManager.Setup().LoadConfiguration(
-                builder =>
-                {
-                    builder.ForLogger().FilterMinLevel(LogLevel.Info).WriteToConsole();
-                });
+                builder => { builder.ForLogger().FilterMinLevel(LogLevel.Info).WriteToConsole(); });
 
-            this.reqifPath = Path.Combine(TestContext.CurrentContext.TestDirectory, "TestData", "ProR_Traceability-Template-v1.0.reqif");
-            this.exportSettingsPath = Path.Combine(TestContext.CurrentContext.TestDirectory, "TestData", "export-settings.json");
-            
-            var reqIfDeserializer = new ReqIFDeserializer();
-            this.reqIFLoaderService = new ReqIFLoaderService(reqIfDeserializer);
-            this.exportSettingsReader = new ExportSettingsReader();
+            this.exportSettingsReader = new Mock<IExportSettingsReader>();
+            this.fileWriter = new Mock<IReqIfFileWriter>();
+            this.sessionDataRetriever = new Mock<ISessionDataRetriever>();
+            this.templateBasedReqIfBuilder = new Mock<ITemplateBasedReqIfBuilder>();
 
-            this.convertCommand = new ConvertCommand(this.reqIFLoaderService, this.exportSettingsReader);
+            this.convertCommand =
+                new ConvertCommand(
+                    this.exportSettingsReader.Object,
+                    this.sessionDataRetriever.Object,
+                    this.fileWriter.Object,
+                    this.templateBasedReqIfBuilder.Object);
         }
 
         [Test]
         public async Task Verify_that_the_ConvertCommand_executes()
         {
-            this.convertCommand.TemplateSource = this.reqifPath;
-
-            this.convertCommand.Username = "admin";
-            this.convertCommand.Password = "pass";
-            this.convertCommand.DataSource = "http://localhost:81";
-            this.convertCommand.TemplateSource = "c:\\ReqIf\\Def2.reqifz";
-            this.convertCommand.TargetReqIF = "c:\\ReqIf\\output2.reqif";
+            this.convertCommand.Username = "user";
+            this.convertCommand.Password = "****";
+            this.convertCommand.DataSource = "http://someuri";
             this.convertCommand.EngineeringModelIid = "694508eb-2730-488c-9405-6ca561df68dd";
-            this.convertCommand.ExportSettings = this.exportSettingsPath;
 
             await this.convertCommand.ExecuteAsync();
+
+            this.exportSettingsReader.Verify(
+                x => x.ReadFile(
+                    It.IsAny<string>()),
+                Times.Once);
+
+            this.fileWriter.Verify(
+                x => x.WriteReqIfFiles(
+                    It.IsAny<ReqIF>(),
+                    It.IsAny<string>()),
+                Times.Once);
+
+            this.sessionDataRetriever.Verify(
+                x => x.OpenSessionAndRetrieveData(
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<Guid>()),
+                Times.Once);
+
+            this.templateBasedReqIfBuilder.Verify(
+                x => x.Build(
+                    It.IsAny<string>(),
+                    It.IsAny<ISession>(),
+                    It.IsAny<ExportSettings>()),
+                Times.Once);
         }
     }
 }
