@@ -53,6 +53,6 @@ namespace DEHReqIF.ExportSettings
         /// <summary>
         /// Gets or sets a value indicating the XHTML tags should be added to XHTML type elements in the ReqIF XML
         /// </summary>
-        public bool AddXHTMLtags { get; set; } = false;
+        public bool AddXhtmlTags { get; set; }
     }
 }

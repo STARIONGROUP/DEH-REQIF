@@ -186,7 +186,7 @@ namespace DEHReqIF
             this.targetReqIf.CoreContent.SpecRelations.Clear();
             this.targetReqIf.CoreContent.SpecRelationGroups.Clear();
 
-            foreach (var requirementsSpecification in this.requirementsSpecifications)
+            foreach (var requirementsSpecification in this.requirementsSpecifications.Where(x => !x.IsDeprecated))
             {
                 var specification = new Specification
                 {
@@ -461,11 +461,11 @@ namespace DEHReqIF
 
                     var objectValue = value.ToValueSetObject(parameterType).ToString();
 
-                    if (this.exportSettings.AddXHTMLtags)
+                    if (this.exportSettings.AddXhtmlTags)
                     {
                         if (!objectValue.ToLower().Contains("<reqif-xhtml:div>"))
                         {
-                            objectValue = $"<reqif-xhtml:div>{objectValue}</reqif-xhtml:div>";
+                            objectValue = $"<reqif-xhtml:div>{HttpUtility.HtmlEncode(objectValue)}</reqif-xhtml:div>";
                         }
                     }
                     else
@@ -474,6 +474,7 @@ namespace DEHReqIF
                     }
 
                     attributeValue.ObjectValue = objectValue;
+
                     break;
 
                 default:
@@ -510,7 +511,15 @@ namespace DEHReqIF
             {
                 var attributeValue = this.CreateAttributeValue(attributeDefinition);
                 attributeValue.AttributeDefinition = attributeDefinition;
-                attributeValue.ObjectValue = value;
+
+                var parameterType = this.GetParameterType(attributeDefinition);
+
+                this.SetAttributeValueValue(
+                    parameterType, 
+                    new ValueArray<string>(new[] { value.ToString() }), 
+                    attributeDefinition, 
+                    attributeValue);
+
                 specObject.Values.Add(attributeValue);
             }
         }
@@ -564,6 +573,38 @@ namespace DEHReqIF
 
                 default:
                     return new AttributeValueString();
+            }
+        }
+
+        /// <summary>
+        /// Creates a <see cref="ParameterType"/> based on its according <see cref="AttributeDefinition"/>
+        /// </summary>
+        /// <param name="attributeDefinitionType">The <see cref="AttributeDefinition"/></param>
+        /// <returns>The <see cref="ParameterType"/></returns>
+        private ParameterType GetParameterType(AttributeDefinition attributeDefinitionType)
+        {
+            switch (attributeDefinitionType)
+            {
+                case AttributeDefinitionBoolean:
+                    return new BooleanParameterType();
+
+                case AttributeDefinitionDate:
+                    return new DateTimeParameterType();
+
+                case AttributeDefinitionEnumeration:
+                    return new EnumerationParameterType();
+
+                case AttributeDefinitionInteger:
+                    return new SimpleQuantityKind();
+
+                case AttributeDefinitionReal:
+                    return new SimpleQuantityKind();
+
+                case AttributeDefinitionXHTML:
+                    return new TextParameterType();
+
+                default:
+                    return new TextParameterType();
             }
         }
 

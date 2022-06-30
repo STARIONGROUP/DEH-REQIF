@@ -149,7 +149,8 @@ namespace DEHReqIF.Tests
                     TextAttributeDefinitionId = "_TextParameterSpecification",
                     NameAttributeDefinitionId = "_NameParameterSpecification"
                 },
-                ExternalIdentifierMap = referenceMap
+                ExternalIdentifierMap = referenceMap,
+                AddXhtmlTags = true
             };
         }
 
@@ -216,7 +217,7 @@ namespace DEHReqIF.Tests
             specification.Requirement.Add(this.requirement1);
             specification.Requirement.Add(this.requirement2);
 
-            var definition0 = new Definition(Guid.NewGuid(), this.assembler.Cache, this.uri) { Content = "This is requirement definition 0" };
+            var definition0 = new Definition(Guid.NewGuid(), this.assembler.Cache, this.uri) { Content = "This is requirement definition 0 & < > ; &nbsp; <div></div> ?!@#$%^&*()-_=+[]{};'\\:|\",./<>?" };
             this.requirement0.Definition.Add(definition0);
 
             var definition1 = new Definition(Guid.NewGuid(), this.assembler.Cache, this.uri) { Content = "This is requirement definition 1" };
