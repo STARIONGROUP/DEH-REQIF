@@ -59,5 +59,10 @@ namespace DEHReqIF.Console.Commands
         /// Gets or sets the location of the export settings file
         /// </summary>
         string ExportSettings { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating that <ALTERNATIVE-ID /> tags should not be added to the result file
+        /// </summary>
+        bool ExcludeAlternativeId { get; set; }
     }
 }

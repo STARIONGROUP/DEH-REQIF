@@ -78,6 +78,11 @@ namespace DEHReqIF
         private SpecificationType specificationType;
 
         /// <summary>
+        /// Gets or sets a value indicating that <ALTERNATIVE-ID /> tags should not be added to the result file
+        /// </summary>
+        private bool ExcludeAlternativeId { get; set; }
+
+        /// <summary>
         /// Builds the ReqIF content from the provided <see cref="IEnumerable{RequirementsSpecification}"/>
         /// </summary>
         /// <param name="templateReqif">
@@ -90,14 +95,23 @@ namespace DEHReqIF
         /// <param name="exportSettings">
         /// The <see cref="ExportSettings"/>
         /// </param>
+        /// <param name="excludeAlternativeId">
+        /// A value indicating that <ALTERNATIVE-ID /> tags should not be added to the result <see cref="ReqIF"/>.
+        /// </param>
         /// <returns>
         /// An instance of <see cref="ReqIF"/>
         /// </returns>
-        public ReqIF Build(ReqIF templateReqif, IEnumerable<RequirementsSpecification> requirementsSpecifications, ExportSettings.ExportSettings exportSettings)
+        public ReqIF Build(
+            ReqIF templateReqif, 
+            IEnumerable<RequirementsSpecification> requirementsSpecifications, 
+            ExportSettings.ExportSettings exportSettings,
+            bool excludeAlternativeId
+            )
         {
             this.exportSettings = exportSettings;
             this.requirementsSpecifications = requirementsSpecifications.ToList();
             this.templateReqif = templateReqif ?? throw new ArgumentNullException(nameof(templateReqif), "the template ReqIF may not be null");
+            this.ExcludeAlternativeId = excludeAlternativeId;
 
             if (this.requirementsSpecifications == null)
             {
@@ -197,9 +211,8 @@ namespace DEHReqIF
                     LastChange = requirementsSpecification.ModifiedOn
                 };
 
-                var specificationAlternativeId = this.CreateAlternativeId(requirementsSpecification);
+                var specificationAlternativeId = this.CreateAlternativeId(requirementsSpecification, specification);
                 specification.AlternativeId = specificationAlternativeId;
-                specificationAlternativeId.Ident = specification;
 
                 this.targetReqIf.CoreContent.Specifications.Add(specification);
                 specification.ReqIFContent = this.targetReqIf.CoreContent;
@@ -325,9 +338,8 @@ namespace DEHReqIF
             this.targetReqIf.CoreContent.SpecObjects.Add(specObject);
             specObject.ReqIFContent = this.targetReqIf.CoreContent;
 
-            var childGroupSpecificationAlternativeId = this.CreateAlternativeId(definedThing);
+            var childGroupSpecificationAlternativeId = this.CreateAlternativeId(definedThing, specObject);
             specObject.AlternativeId = childGroupSpecificationAlternativeId;
-            childGroupSpecificationAlternativeId.Ident = specObject;
 
             return specObject;
         }
@@ -530,16 +542,29 @@ namespace DEHReqIF
         /// <param name="thing">
         /// The <see cref="Thing"/> that is used to create the <see cref="AlternativeId"/>
         /// </param>
+        /// <param name="ident">
+        /// The parent <see cref="Identifiable"/>
+        /// </param>
         /// <returns>
         /// An <see cref="AlternativeId"/> where the <see cref="AlternativeId.Identifier"/> property is
         /// set to the <see cref="Thing.Iid"/> property 
         /// </returns>
-        private AlternativeId CreateAlternativeId(Thing thing)
+        private AlternativeId CreateAlternativeId(Thing thing, Identifiable ident = null)
         {
+            if (this.ExcludeAlternativeId)
+            {
+                return null;
+            }
+
             var alternativeId = new AlternativeId
             {
                 Identifier = $"_{thing.Iid}"
             };
+
+            if (ident != null)
+            {
+                alternativeId.Ident = ident;
+            }
 
             return alternativeId;
         }

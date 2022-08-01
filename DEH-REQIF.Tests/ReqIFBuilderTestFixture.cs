@@ -21,6 +21,7 @@
 namespace DEHReqIF.Tests
 {
     using System;
+    using System.Collections.Generic;
     using System.IO;
     using System.Linq;
     using System.Threading;
@@ -163,7 +164,7 @@ namespace DEHReqIF.Tests
             var cts = new CancellationTokenSource();
 
             await using var fileStream = new FileStream(this.reqifTemplatePath, FileMode.Open);
-            await reqIFLoaderService.Load(fileStream, cts.Token);
+            await reqIFLoaderService.Load(fileStream, this.reqifTemplatePath.ConvertPathToSupportedFileExtensionKind(), cts.Token);
 
             this.templateReqIF = reqIFLoaderService.ReqIFData.Single();
         }
@@ -301,12 +302,12 @@ namespace DEHReqIF.Tests
         {
             var builder = new ReqIFBuilder();
 
-            var targetReqIf = builder.Build(this.templateReqIF, this.iteration.RequirementsSpecification, this.exportSettings);
+            var targetReqIf = builder.Build(this.templateReqIF, this.iteration.RequirementsSpecification, this.exportSettings, true);
 
             var reqifSerializer = new ReqIFSerializer();
 
             var stream = new MemoryStream();
-            reqifSerializer.Serialize(targetReqIf, stream);
+            reqifSerializer.Serialize(new List<ReqIF> { targetReqIf }, stream, SupportedFileExtensionKind.Reqif);
 
             stream.Position = 0;
             var reqIfXml = new StreamReader(stream).ReadToEnd();
@@ -314,6 +315,8 @@ namespace DEHReqIF.Tests
             Assert.Multiple(() =>
             {
                 Assert.That(string.IsNullOrWhiteSpace(reqIfXml), Is.Not.True);
+                Assert.IsFalse(reqIfXml.ToLower().Contains("<alternative-id"));
+
                 Assert.That(this.memoryTarget.Logs.Count, Is.EqualTo(0));
 
                 Assert.That(targetReqIf.TheHeader.RepositoryId, Is.EqualTo(@$"EngineeringModel\{this.engineeringModelIid}\iteration\{this.iterationIid}"));
@@ -398,13 +401,31 @@ namespace DEHReqIF.Tests
         }
 
         [Test]
+        public void Verify_that_alternative_id_tags_are_added()
+        {
+            var builder = new ReqIFBuilder();
+
+            var targetReqIf = builder.Build(this.templateReqIF, this.iteration.RequirementsSpecification, this.exportSettings, false);
+
+            var reqifSerializer = new ReqIFSerializer();
+
+            var stream = new MemoryStream();
+            reqifSerializer.Serialize(new List<ReqIF> { targetReqIf }, stream, SupportedFileExtensionKind.Reqif);
+
+            stream.Position = 0;
+            var reqIfXml = new StreamReader(stream).ReadToEnd();
+
+            Assert.IsTrue(reqIfXml.ToLower().Contains("<alternative-id")); 
+        }
+
+        [Test]
         public void Verify_that_logging_works_for_RequirementAttributeDefinitions()
         {
             var builder = new ReqIFBuilder();
 
             var attritbuteDefinitionId = this.exportSettings.RequirementAttributeDefinitions.TextAttributeDefinitionId += "NOT_FOUND";
 
-            builder.Build(this.templateReqIF, this.iteration.RequirementsSpecification, this.exportSettings);
+            builder.Build(this.templateReqIF, this.iteration.RequirementsSpecification, this.exportSettings, false);
 
             Assert.That(this.memoryTarget.Logs.Count, Is.EqualTo(5));
 
@@ -421,7 +442,7 @@ namespace DEHReqIF.Tests
 
             var attritbuteDefinitionId = this.exportSettings.SpecificationAttributeDefinitions.NameAttributeDefinitionId += "NOT_FOUND";
 
-            builder.Build(this.templateReqIF, this.iteration.RequirementsSpecification, this.exportSettings);
+            builder.Build(this.templateReqIF, this.iteration.RequirementsSpecification, this.exportSettings, false);
 
             Assert.That(this.memoryTarget.Logs.Count, Is.EqualTo(1));
 
@@ -435,7 +456,7 @@ namespace DEHReqIF.Tests
 
             this.templateReqIF.CoreContent.SpecTypes.Add(new SpecObjectType());
 
-            builder.Build(this.templateReqIF, this.iteration.RequirementsSpecification, this.exportSettings);
+            builder.Build(this.templateReqIF, this.iteration.RequirementsSpecification, this.exportSettings, false);
 
             Assert.That(this.memoryTarget.Logs.Count, Is.EqualTo(1));
 
@@ -449,7 +470,7 @@ namespace DEHReqIF.Tests
 
             this.templateReqIF.CoreContent.SpecTypes.Add(new SpecificationType());
 
-            builder.Build(this.templateReqIF, this.iteration.RequirementsSpecification, this.exportSettings);
+            builder.Build(this.templateReqIF, this.iteration.RequirementsSpecification, this.exportSettings, false);
 
             Assert.That(this.memoryTarget.Logs.Count, Is.EqualTo(1));
 
@@ -463,7 +484,7 @@ namespace DEHReqIF.Tests
 
             this.templateReqIF.CoreContent.SpecTypes.Remove(this.templateReqIF.CoreContent.SpecTypes.First(x => x is SpecObjectType));
 
-            Assert.Throws<NotSupportedException>(() => builder.Build(this.templateReqIF, this.iteration.RequirementsSpecification, this.exportSettings));
+            Assert.Throws<NotSupportedException>(() => builder.Build(this.templateReqIF, this.iteration.RequirementsSpecification, this.exportSettings, false));
         }
 
         [Test]
@@ -473,7 +494,7 @@ namespace DEHReqIF.Tests
 
             this.templateReqIF.CoreContent.SpecTypes.Remove(this.templateReqIF.CoreContent.SpecTypes.First(x => x is SpecificationType));
 
-            Assert.Throws<NotSupportedException>(() => builder.Build(this.templateReqIF, this.iteration.RequirementsSpecification, this.exportSettings));
+            Assert.Throws<NotSupportedException>(() => builder.Build(this.templateReqIF, this.iteration.RequirementsSpecification, this.exportSettings, false));
         }
     }
 }

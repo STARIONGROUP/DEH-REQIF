@@ -125,6 +125,11 @@ namespace DEHReqIF.Console.Commands
         public string ExportSettings { get; set; } = "export-settings.json";
 
         /// <summary>
+        /// Gets or sets a value indicating that <ALTERNATIVE-ID /> tags should not be added to the result file
+        /// </summary>
+        public bool ExcludeAlternativeId { get; set; }
+
+        /// <summary>
         /// Executes the <see cref="ConvertCommand"/>
         /// </summary>
         public async Task ExecuteAsync()
@@ -178,7 +183,7 @@ namespace DEHReqIF.Console.Commands
         {
             var sw = Stopwatch.StartNew();
 
-            var targetReqIF = await this.templateBasedReqIfBuilder.Build(this.TemplateSource, session, exportSettings);
+            var targetReqIF = await this.templateBasedReqIfBuilder.Build(this.TemplateSource, session, exportSettings, this.ExcludeAlternativeId);
 
             logger.Info($"Target ReqIf was built in {sw.ElapsedMilliseconds} [ms]");
 

@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "DEH-REQIF.Console": {
+      "commandName": "Project",
+      "commandLineArgs": "convert"
+    }
+  }
+}

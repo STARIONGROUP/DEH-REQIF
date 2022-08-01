@@ -39,7 +39,10 @@ namespace DEHReqIF.Services
         /// <param name="templateSourceLocation">The location of the template source</param>
         /// <param name="session">The <see cref="ISession"/></param>
         /// <param name="exportSettings">The <see cref="ExportSettings"/></param>
+        /// <param name="excludeAlternativeId">
+        /// A value indicating that <ALTERNATIVE-ID /> tags should not be added to the result <see cref="ReqIF"/>.
+        /// </param>
         /// <returns>An awaitable <see cref="Task{T}"/> of type <see cref="ReqIF"/></returns>
-        Task<ReqIF> Build(string templateSourceLocation, ISession session, ExportSettings exportSettings);
+        Task<ReqIF> Build(string templateSourceLocation, ISession session, ExportSettings exportSettings, bool excludeAlternativeId);
     }
 }

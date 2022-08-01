@@ -54,17 +54,20 @@ namespace DEHReqIF.Services
         /// <param name="templateSourceLocation">The location of the template source</param>
         /// <param name="session">The <see cref="ISession"/></param>
         /// <param name="exportSettings">The <see cref="ExportSettings"/></param>
+        /// <param name="excludeAlternativeId">
+        /// A value indicating that <ALTERNATIVE-ID /> tags should not be added to the result <see cref="ReqIF"/>.
+        /// </param>
         /// <returns>An awaitable <see cref="Task{T}"/> of type <see cref="ReqIF"/></returns>
-        public async Task<ReqIF> Build(string templateSourceLocation, ISession session, ExportSettings exportSettings)
+        public async Task<ReqIF> Build(string templateSourceLocation, ISession session, ExportSettings exportSettings, bool excludeAlternativeId)
         {
             using var fileStream = new FileStream(templateSourceLocation, FileMode.Open);
 
-            await this.reqIfLoaderService.Load(fileStream, new CancellationToken());
+            await this.reqIfLoaderService.Load(fileStream, templateSourceLocation.ConvertPathToSupportedFileExtensionKind(), new CancellationToken());
 
             var templateReqIF = this.reqIfLoaderService.ReqIFData.Single();
 
             var builder = new ReqIFBuilder();
-            var targetReqIf = builder.Build(templateReqIF, session.OpenIterations.First().Key.RequirementsSpecification, exportSettings);
+            var targetReqIf = builder.Build(templateReqIF, session.OpenIterations.First().Key.RequirementsSpecification, exportSettings, excludeAlternativeId);
 
             return targetReqIf;
         }

@@ -20,8 +20,7 @@
 
 namespace DEHReqIF.Services
 {
-    using System.IO;
-    using System.IO.Compression;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -47,29 +46,7 @@ namespace DEHReqIF.Services
         /// </returns>
         public async Task WriteReqIfFiles(ReqIF targetReqIf, string targetLocation)
         {
-            var targetReqIFLocation = Path.ChangeExtension(targetLocation, ".reqif");
-            var targetReqIFzLocation = Path.ChangeExtension(targetLocation, ".reqifz");
-            var entryName = new FileInfo(targetLocation).Name;
-
-            if (File.Exists(targetReqIFLocation))
-            {
-                File.Delete(targetReqIFLocation);
-            }
-
-            await new ReqIFSerializer().SerializeAsync(targetReqIf, targetReqIFLocation, new CancellationToken());
-
-            if (File.Exists(targetReqIFzLocation))
-            {
-                File.Delete(targetReqIFzLocation);
-            }
-
-            using (var zipToOpen = new FileStream(targetReqIFzLocation, FileMode.CreateNew))
-            {
-                using (var archive = new ZipArchive(zipToOpen, ZipArchiveMode.Update))
-                {
-                    archive.CreateEntryFromFile(targetReqIFLocation, entryName);
-                }
-            }
+            await new ReqIFSerializer().SerializeAsync(new List<ReqIF> { targetReqIf }, targetLocation, new CancellationToken());
         }
     }
 }

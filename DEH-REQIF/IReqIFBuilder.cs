@@ -45,9 +45,12 @@ namespace DEHReqIF
         /// <param name="exportSettings">
         /// The settings to be used for converting the E-CSS-TM-10-25 objects to existing ReqIF objects in the template ReqIF file
         /// </param>
+        /// <param name="excludeAlternativeId">
+        /// A value indicating that <ALTERNATIVE-ID /> tags should not be added to the result <see cref="ReqIF"/>.
+        /// </param>
         /// <returns>
         /// An instance of <see cref="ReqIF"/>
         /// </returns>
-        ReqIF Build(ReqIF templateReqif, IEnumerable<RequirementsSpecification> requirementsSpecification, ExportSettings.ExportSettings exportSettings);
+        ReqIF Build(ReqIF templateReqif, IEnumerable<RequirementsSpecification> requirementsSpecification, ExportSettings.ExportSettings exportSettings, bool excludeAlternativeId);
     }
 }

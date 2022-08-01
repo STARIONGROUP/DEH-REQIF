@@ -104,7 +104,8 @@ namespace DEHReqIF.Console.Tests
                 x => x.Build(
                     It.IsAny<string>(),
                     It.IsAny<ISession>(),
-                    It.IsAny<ExportSettings>()),
+                    It.IsAny<ExportSettings>(),
+                    It.IsAny<bool>()),
                 Times.Once);
         }
     }
