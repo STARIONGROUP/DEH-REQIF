@@ -35,6 +35,7 @@ namespace DEHReqIF.Tests
     using CDP4Dal;
 
     using DEHReqIF.ExportSettings;
+    using DEHReqIF.Services;
 
     using NLog;
     using NLog.Config;
@@ -46,6 +47,7 @@ namespace DEHReqIF.Tests
     using ReqIFSharp.Extensions.Services;
 
     using ExternalIdentifierMap = DEHReqIF.ExportSettings.ExternalIdentifierMap;
+    using File = CDP4Common.EngineeringModelData.File;
     using IdCorrespondence = DEHReqIF.ExportSettings.IdCorrespondence;
 
     /// <summary>
@@ -416,6 +418,26 @@ namespace DEHReqIF.Tests
             var reqIfXml = new StreamReader(stream).ReadToEnd();
 
             Assert.IsTrue(reqIfXml.ToLower().Contains("<alternative-id")); 
+        }
+
+        [Test]
+        public async Task Verify_that_reqifz_can_be_created()
+        {
+            var builder = new ReqIFBuilder();
+
+            var targetReqIf = builder.Build(this.templateReqIF, this.iteration.RequirementsSpecification, this.exportSettings, false);
+
+            var reqifSerializer = new ReqIFSerializer();
+
+            var writer = new ReqIfFileWriter();
+
+            var stream = new MemoryStream();
+            await writer.WriteReqIfFiles(targetReqIf, "tempfile.reqifz");
+
+            if (System.IO.File.Exists("tempfile.reqifz"))
+            {
+                System.IO.File.Delete("tempfile.reqifz");
+            }
         }
 
         [Test]
