@@ -1,6 +1,6 @@
 # DEH-REQIF
 
-The Digital Engineering Hub ReqIF (DEH-ReqIF) library is used to convert an ECSS-E-TM-10-25 requirements set into a ReqIF document.
+The Digital Engineering Hub ReqIF (DEH-ReqIF) solution is used to convert an ECSS-E-TM-10-25 requirements set into a ReqIF document. The solution provides the **DEH-ReqIF** nuget package as well as a console application **DEH-REQIF.Console**.
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=RHEAGROUP_DEH-REQIF&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=RHEAGROUP_DEH-REQIF)
 [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=RHEAGROUP_DEH-REQIF&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=RHEAGROUP_DEH-REQIF)
@@ -18,7 +18,6 @@ The Digital Engineering Hub ReqIF (DEH-ReqIF) library is used to convert an ECSS
 The packages are available on Nuget at https://www.nuget.org/packages/DEH-ReqIF/
 
 [![NuGet Badge](https://buildstats.info/nuget/DEH-ReqIF)](https://buildstats.info/nuget/DEH-ReqIF)
-
 
 ## Build Status
 

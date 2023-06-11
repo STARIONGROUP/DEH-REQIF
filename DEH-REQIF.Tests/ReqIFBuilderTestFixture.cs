@@ -424,9 +424,7 @@ namespace DEHReqIF.Tests
             var builder = new ReqIFBuilder();
 
             var targetReqIf = builder.Build(this.templateReqIF, this.iteration.RequirementsSpecification, this.exportSettings, false);
-
-            var reqifSerializer = new ReqIFSerializer();
-
+            
             var writer = new ReqIfFileWriter();
 
             var stream = new MemoryStream();
