@@ -1,38 +1,37 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <RootNamespace>DEHReqIF</RootNamespace>
-	<Version>0.1.0</Version>
-	<Description>A .NET library to conver ECSS-E-TM-10-25 requirements to an OMG ReqIF file.</Description>
-	<PackageId>DEH-ReqIF</PackageId>
-	<Company>RHEA System S.A.</Company>
-	<Copyright>Copyright 2022 RHEA System S.A.</Copyright>
-	<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
-	<RepositoryUrl>https://github.com/RHEAGROUP/DEH-REQIF.git</RepositoryUrl>
-	<RepositoryType>Git</RepositoryType>
-	<PackageTags>ReqIF ECSS-E-TM-10-25 COMET</PackageTags>
-	<Authors>Sam Gerené</Authors>
-	<RequireLicenseAcceptance>false</RequireLicenseAcceptance>
-    <PackageReleaseNotes>
-	  [Initial Version]
-    </PackageReleaseNotes>
-    <LangVersion>latest</LangVersion>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <RootNamespace>DEHReqIF</RootNamespace>
+        <Version>0.2.0</Version>
+        <Description>A .NET library to conver ECSS-E-TM-10-25 requirements to an OMG ReqIF file.</Description>
+        <PackageId>DEH-ReqIF</PackageId>
+        <Company>RHEA System S.A.</Company>
+        <Copyright>Copyright 2022-2023 RHEA System S.A.</Copyright>
+        <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+        <RepositoryUrl>https://github.com/RHEAGROUP/DEH-REQIF.git</RepositoryUrl>
+        <RepositoryType>Git</RepositoryType>
+        <PackageTags>ReqIF ECSS-E-TM-10-25 COMET</PackageTags>
+        <Authors>Sam Gerené</Authors>
+        <RequireLicenseAcceptance>false</RequireLicenseAcceptance>
+        <PackageReleaseNotes>
+            [Initial Version]
+        </PackageReleaseNotes>
+        <LangVersion>latest</LangVersion>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="Reporting\**" />
-    <EmbeddedResource Remove="Reporting\**" />
-    <None Remove="Reporting\**" />
-  </ItemGroup>
+    <ItemGroup>
+        <Compile Remove="Reporting\**" />
+        <EmbeddedResource Remove="Reporting\**" />
+        <None Remove="Reporting\**" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="CDP4Dal-CE" Version="8.1.0" />
-    <PackageReference Include="CDP4ServicesDal-CE" Version="8.1.0" />
-    <PackageReference Include="NLog" Version="5.0.1" />
-    <PackageReference Include="NLog.Extensions.Logging" Version="5.0.1" />
-    <PackageReference Include="ReqIFSharp.Extensions" Version="1.0.1" />
-    <PackageReference Include="System.Text.Json" Version="6.0.5" />
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="CDP4ServicesDal-CE" Version="9.0.0" />
+        <PackageReference Include="NLog" Version="5.0.1" />
+        <PackageReference Include="NLog.Extensions.Logging" Version="5.0.1" />
+        <PackageReference Include="ReqIFSharp.Extensions" Version="2.0.0" />
+        <PackageReference Include="System.Text.Json" Version="7.0.2" />
+    </ItemGroup>
 
 </Project>

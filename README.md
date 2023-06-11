@@ -1,6 +1,6 @@
 # DEH-REQIF
-The Digital Engineering Hub ReqIF (DEH-ReqIF) library is used to convert an ECSS-E-TM-10-25 requirements set into a ReqIF document.
 
+The Digital Engineering Hub ReqIF (DEH-ReqIF) library is used to convert an ECSS-E-TM-10-25 requirements set into a ReqIF document.
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=RHEAGROUP_DEH-REQIF&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=RHEAGROUP_DEH-REQIF)
 [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=RHEAGROUP_DEH-REQIF&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=RHEAGROUP_DEH-REQIF)
@@ -28,13 +28,6 @@ Branch | Build Status
 ------- | :------------
 Master | ![Build Status](https://github.com/RHEAGROUP/DEH-REQIF/actions/workflows/CodeQuality.yml/badge.svg?branch=master)
 Development | ![Build Status](https://github.com/RHEAGROUP/DEH-REQIF/actions/workflows/CodeQuality.yml/badge.svg?branch=development)
-
-# CodeCov - Code Coverage
-
-Branch      | Build Status
------------ | ------------
-Master      | [![codecov](https://codecov.io/gh/RHEAGROUP/DEH-REQIF/branch/master/graph/badge.svg?token=2kfZrIOUtI)](https://codecov.io/gh/RHEAGROUP/DEH-REQIF)
-Development | [![codecov](https://codecov.io/gh/RHEAGROUP/DEH-REQIF/branch/development/graph/badge.svg?token=2kfZrIOUtI)](https://codecov.io/gh/RHEAGROUP/DEH-REQIF)
 
 # License
 
