@@ -274,6 +274,9 @@ namespace DEHReqIF.MappingRules.ParameterTypes
         /// <param name="quantityKind">
         /// The <see cref="QuantityKind"/> that is to be transformed into a <see cref="DatatypeDefinitionReal"/>
         /// </param>
+        /// <param name="measurementScale">
+        /// The <see cref="MeasurementScale"/> that is to be used for the mapping
+        /// </param>
         /// <returns>
         /// an instance of <see cref="DatatypeDefinitionReal"/>
         /// </returns>

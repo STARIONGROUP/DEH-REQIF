@@ -226,7 +226,7 @@ namespace DEHReqIF.Tests.MappingRules.ParameterTypes
                 Assert.That(datatypeDefinitionEnumeration.AlternativeId.Identifier, Is.EqualTo(enumerationParameterType.Iid.ToString()));
                 Assert.That(datatypeDefinitionEnumeration.LastChange, Is.LessThanOrEqualTo(DateTime.UtcNow));
 
-                Assert.That(datatypeDefinitionEnumeration.SpecifiedValues.Count, Is.EqualTo(2));
+                Assert.That(datatypeDefinitionEnumeration.SpecifiedValues, Has.Count.EqualTo(2));
 
                 var enumValueLow = datatypeDefinitionEnumeration.SpecifiedValues.Single(x => x.LongName == "low");
                 Assert.That(enumValueLow.AlternativeId.Identifier, Is.EqualTo(low.Iid.ToString()));

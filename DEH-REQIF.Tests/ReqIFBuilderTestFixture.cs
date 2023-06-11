@@ -317,30 +317,28 @@ namespace DEHReqIF.Tests
             Assert.Multiple(() =>
             {
                 Assert.That(string.IsNullOrWhiteSpace(reqIfXml), Is.Not.True);
-                Assert.IsFalse(reqIfXml.ToLower().Contains("<alternative-id"));
+                Assert.That(reqIfXml.ToLower(), Does.Not.Contain("<alternative-id"));
 
-                Assert.That(this.memoryTarget.Logs.Count, Is.EqualTo(0));
+                Assert.That(this.memoryTarget.Logs, Has.Count.EqualTo(0));
 
                 Assert.That(targetReqIf.TheHeader.RepositoryId, Is.EqualTo(@$"EngineeringModel\{this.engineeringModelIid}\iteration\{this.iterationIid}"));
                 Assert.That(targetReqIf.TheHeader.ReqIFToolId, Is.EqualTo("RHEA DEH-REQIF"));
                 Assert.That(targetReqIf.TheHeader.ReqIFVersion, Is.EqualTo("1.2"));
                 Assert.That(targetReqIf.TheHeader.SourceToolId, Is.EqualTo("RHEA COMET"));
                 Assert.That(targetReqIf.TheHeader.Title, Is.EqualTo("This is a test ReqIF document"));
-
-                Assert.That(targetReqIf.CoreContent.SpecRelations.Count, Is.EqualTo(0));
-                Assert.That(targetReqIf.CoreContent.SpecRelationGroups.Count, Is.EqualTo(0));
-
-                Assert.That(targetReqIf.CoreContent.DataTypes.Count, Is.EqualTo(6));
-
-                Assert.That(targetReqIf.CoreContent.SpecTypes.Count, Is.EqualTo(2));
+                
+                Assert.That(targetReqIf.CoreContent.SpecRelations, Has.Count.EqualTo(0));
+                Assert.That(targetReqIf.CoreContent.SpecRelationGroups, Has.Count.EqualTo(0));
+                Assert.That(targetReqIf.CoreContent.DataTypes, Has.Count.EqualTo(6));
+                Assert.That(targetReqIf.CoreContent.SpecTypes, Has.Count.EqualTo(2));
                 Assert.That(targetReqIf.CoreContent.SpecTypes.OfType<SpecObjectType>().Count(), Is.EqualTo(1));
                 Assert.That(targetReqIf.CoreContent.SpecTypes.OfType<SpecificationType>().Count(), Is.EqualTo(1));
 
                 Assert.That(targetReqIf.CoreContent.SpecTypes.OfType<SpecRelationType>().Count(), Is.EqualTo(0));
-                Assert.That(targetReqIf.ToolExtension.Count, Is.EqualTo(1));
-                Assert.That(targetReqIf.CoreContent.SpecObjects.Count, Is.EqualTo(5));
-                Assert.That(targetReqIf.CoreContent.Specifications.Count, Is.EqualTo(1));
-                Assert.That(targetReqIf.CoreContent.Specifications.First().Children.Count, Is.EqualTo(2));
+                Assert.That(targetReqIf.ToolExtension, Has.Count.EqualTo(1));
+                Assert.That(targetReqIf.CoreContent.SpecObjects, Has.Count.EqualTo(5));
+                Assert.That(targetReqIf.CoreContent.Specifications, Has.Count.EqualTo(1));
+                Assert.That(targetReqIf.CoreContent.Specifications.First().Children, Has.Count.EqualTo(2));
 
                 var specification = targetReqIf
                     .CoreContent
@@ -374,8 +372,8 @@ namespace DEHReqIF.Tests
                         .SingleOrDefault(x => x.Object.LongName == this.requirement2.Name);
 
                 Assert.That(specification, Is.Not.Null);
-                Assert.That(specification.Values.Count, Is.EqualTo(3));
-                Assert.That(specification.Children.Count, Is.EqualTo(2));
+                Assert.That(specification.Values, Has.Count.EqualTo(3));
+                Assert.That(specification.Children, Has.Count.EqualTo(2));
                 Assert.That(specification.Values.Where(x => x.ObjectValue == null).Count, Is.EqualTo(0));
 
                 Assert.That(group1, Is.Not.Null);
@@ -421,7 +419,7 @@ namespace DEHReqIF.Tests
         }
 
         [Test]
-        public async Task Verify_that_reqifz_can_be_created()
+        public void Verify_that_reqifz_can_be_created()
         {
             var builder = new ReqIFBuilder();
 
@@ -432,7 +430,7 @@ namespace DEHReqIF.Tests
             var writer = new ReqIfFileWriter();
 
             var stream = new MemoryStream();
-            await writer.WriteReqIfFiles(targetReqIf, "tempfile.reqifz");
+            Assert.DoesNotThrowAsync( () => writer.WriteReqIfFiles(targetReqIf, "tempfile.reqifz"));
 
             if (System.IO.File.Exists("tempfile.reqifz"))
             {
@@ -449,7 +447,7 @@ namespace DEHReqIF.Tests
 
             builder.Build(this.templateReqIF, this.iteration.RequirementsSpecification, this.exportSettings, false);
 
-            Assert.That(this.memoryTarget.Logs.Count, Is.EqualTo(5));
+            Assert.That(this.memoryTarget.Logs, Has.Count.EqualTo(5));
 
             foreach (var log in this.memoryTarget.Logs)
             {
@@ -466,7 +464,7 @@ namespace DEHReqIF.Tests
 
             builder.Build(this.templateReqIF, this.iteration.RequirementsSpecification, this.exportSettings, false);
 
-            Assert.That(this.memoryTarget.Logs.Count, Is.EqualTo(1));
+            Assert.That(this.memoryTarget.Logs, Has.Count.EqualTo(1));
 
             Assert.That(this.memoryTarget.Logs[0].Contains($"The expected export setting {attritbuteDefinitionId} was not found in the template ReqIF file."), Is.True);
         }
@@ -480,7 +478,7 @@ namespace DEHReqIF.Tests
 
             builder.Build(this.templateReqIF, this.iteration.RequirementsSpecification, this.exportSettings, false);
 
-            Assert.That(this.memoryTarget.Logs.Count, Is.EqualTo(1));
+            Assert.That(this.memoryTarget.Logs, Has.Count.EqualTo(1));
 
             Assert.That(this.memoryTarget.Logs[0].Contains("Multiple SpecObjectTypes were found. The first one found is selected as the SpecObjectType to use during conversion."), Is.True);
         }
@@ -494,7 +492,7 @@ namespace DEHReqIF.Tests
 
             builder.Build(this.templateReqIF, this.iteration.RequirementsSpecification, this.exportSettings, false);
 
-            Assert.That(this.memoryTarget.Logs.Count, Is.EqualTo(1));
+            Assert.That(this.memoryTarget.Logs, Has.Count.EqualTo(1));
 
             Assert.That(this.memoryTarget.Logs[0].Contains("Multiple SpecificationTypes were found. The first one found is selected as the SpecificationType to use during conversion."), Is.True);
         }

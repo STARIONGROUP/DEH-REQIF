@@ -84,15 +84,15 @@ namespace DEHReqIF.Console.Commands
 
             commandLineApplication.OnExecute(async () =>
             {
-                this.ConvertCommand.Username = usernameOption.HasValue() ? usernameOption.Value() : throw new ArgumentNullException(nameof(usernameOption), "Please provide a username (-u|--username <USERNAME>)");
-                this.ConvertCommand.Password = passwordOption.HasValue() ? passwordOption.Value() : throw new ArgumentNullException(nameof(passwordOption), "Please provide a password (-s|--secret <SECRET>)");
-                this.ConvertCommand.DataSource = dataSourceOption.HasValue() ? dataSourceOption.Value() : throw new ArgumentNullException(nameof(dataSourceOption), "Please provide a data source (-d|--datasource <DATASOURCE>)");
+                this.ConvertCommand.Username = usernameOption.HasValue() ? usernameOption.Value() : throw new ArgumentNullException("username", "Please provide a username (-u|--username <USERNAME>)");
+                this.ConvertCommand.Password = passwordOption.HasValue() ? passwordOption.Value() : throw new ArgumentNullException("passwordOption", "Please provide a password (-s|--secret <SECRET>)");
+                this.ConvertCommand.DataSource = dataSourceOption.HasValue() ? dataSourceOption.Value() : throw new ArgumentNullException("dataSourceOption", "Please provide a data source (-d|--datasource <DATASOURCE>)");
 
-                this.ConvertCommand.TemplateSource = templateSource.HasValue() ? templateSource.Value() : throw new ArgumentNullException(nameof(templateSource), "Please provide a template reqif file (-sr|--source-reqif <SOURCE_REQIF>)");
-                this.ConvertCommand.TargetReqIF = targetReqIF.HasValue() ? targetReqIF.Value() : throw new ArgumentNullException(nameof(targetReqIF), "Please provide a target reqif file (-tr|--target-reqif <TARGET_REQIF>)");
+                this.ConvertCommand.TemplateSource = templateSource.HasValue() ? templateSource.Value() : throw new ArgumentNullException("templateSource", "Please provide a template reqif file (-sr|--source-reqif <SOURCE_REQIF>)");
+                this.ConvertCommand.TargetReqIF = targetReqIF.HasValue() ? targetReqIF.Value() : throw new ArgumentNullException("targetReqIF", "Please provide a target reqif file (-tr|--target-reqif <TARGET_REQIF>)");
 
                 this.ConvertCommand.ExportSettings = exportSettings.HasValue() ? exportSettings.Value() : string.Empty;
-                this.ConvertCommand.EngineeringModelIid = engineeringModelIid.HasValue() ? engineeringModelIid.Value() : throw new ArgumentNullException(nameof(engineeringModelIid), "Please provide an engineering model iid (-ei|--engineeringmodel-id <ENGINEERINGMODEL>)");
+                this.ConvertCommand.EngineeringModelIid = engineeringModelIid.HasValue() ? engineeringModelIid.Value() : throw new ArgumentNullException("engineeringModelIid", "Please provide an engineering model iid (-ei|--engineeringmodel-id <ENGINEERINGMODEL>)");
 
                 this.ConvertCommand.ExcludeAlternativeId = excludeAlternativeId.Values?.FirstOrDefault() == "on";
 

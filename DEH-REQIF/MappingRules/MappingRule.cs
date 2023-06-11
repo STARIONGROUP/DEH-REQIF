@@ -23,7 +23,7 @@ namespace DEHReqIF.MappingRules
     using System;
 
     /// <summary>
-    /// Reprents a Mappable property usable by the <see cref="MappingEngine"/>
+    /// Represents a Mappable property usable by the <see cref="MappingEngine"/>
     /// </summary>
     /// <typeparam name="TInput">The input <see cref="Type"/></typeparam>
     /// <typeparam name="TOutput">The output <see cref="Type"/></typeparam>
