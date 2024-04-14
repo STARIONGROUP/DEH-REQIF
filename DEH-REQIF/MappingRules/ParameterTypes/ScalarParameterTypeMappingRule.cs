@@ -28,6 +28,8 @@ namespace DEHReqIF.MappingRules.ParameterTypes
 
     using ReqIFSharp;
 
+    using NLog;
+
     /// <summary>
     /// The purpose of the <see cref="ScalarParameterTypeMappingRule"/> is to transform a <see cref="ScalarParameterType"/> to
     /// a <see cref="DatatypeDefinition"/>
@@ -38,6 +40,11 @@ namespace DEHReqIF.MappingRules.ParameterTypes
     /// </remarks>
     public class ScalarParameterTypeMappingRule : MappingRule<ScalarParameterType, DatatypeDefinition>
     {
+        /// <summary>
+        /// The <see cref="NLog"/> logger
+        /// </summary>
+        private static readonly Logger logger = LogManager.GetCurrentClassLogger();
+
         /// <summary>
         /// Transforms <see cref="ScalarParameterType"/> to a <see cref="DatatypeDefinition"/>
         /// </summary>
@@ -251,7 +258,7 @@ namespace DEHReqIF.MappingRules.ParameterTypes
             }
             else
             {
-                // TODO: log error
+                logger.Warn("The MeasurementScale.MaximumPermissibleValue could not be parsed");
             }
 
             if (long.TryParse(measurementScale.MinimumPermissibleValue, out long minValue))
@@ -260,7 +267,7 @@ namespace DEHReqIF.MappingRules.ParameterTypes
             }
             else
             {
-                // TODO: log error
+                logger.Warn("The MeasurementScale.MinimumPermissibleValue could not be parsed");
             }
             
             this.UpdateDescription(datatypeDefinitionInteger, quantityKind);
@@ -298,7 +305,7 @@ namespace DEHReqIF.MappingRules.ParameterTypes
             }
             else
             {
-                // TODO: log error
+                logger.Warn("The MeasurementScale.MaximumPermissibleValue could not be parsed");
             }
 
             if (double.TryParse(measurementScale.MinimumPermissibleValue, out double minValue))
@@ -307,7 +314,7 @@ namespace DEHReqIF.MappingRules.ParameterTypes
             }
             else
             {
-                // TODO: log error
+                logger.Warn("The MeasurementScale.MinimumPermissibleValue could not be parsed");
             }
 
             this.UpdateDescription(datatypeDefinitionReal, quantityKind);
