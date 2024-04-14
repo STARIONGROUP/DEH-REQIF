@@ -3,7 +3,7 @@
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
         <RootNamespace>DEHReqIF</RootNamespace>
-        <Version>1.0.0</Version>
+        <Version>1.0.1</Version>
         <Description>A .NET library to conver ECSS-E-TM-10-25 requirements to an OMG ReqIF file.</Description>
         <PackageId>DEH-ReqIF</PackageId>
         <Company>RHEA System S.A.</Company>
@@ -16,10 +16,13 @@
         <RequireLicenseAcceptance>false</RequireLicenseAcceptance>
         <IncludeSource>true</IncludeSource>
         <IncludeSymbols>true</IncludeSymbols>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <PackageReleaseNotes>
             [Initial Version]
         </PackageReleaseNotes>
         <LangVersion>latest</LangVersion>
+        <PackageIcon>cdp4-comet-logo.png</PackageIcon>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
     </PropertyGroup>
 
     <ItemGroup>
@@ -34,6 +37,11 @@
         <PackageReference Include="NLog.Extensions.Logging" Version="5.3.8" />
         <PackageReference Include="ReqIFSharp.Extensions" Version="2.1.1" />
         <PackageReference Include="System.Text.Json" Version="8.0.3" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Include="..\cdp4-comet-logo.png" Pack="true" PackagePath="\" />
+        <None Include="..\README.md" Pack="true" PackagePath="\" />
     </ItemGroup>
 
 </Project>
