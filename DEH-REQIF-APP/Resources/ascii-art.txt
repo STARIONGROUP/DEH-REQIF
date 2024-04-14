@@ -6,7 +6,7 @@
  ██████╔╝███████╗██║  ██║      ██║  ██║███████╗╚██████╔╝██║██║     
  ╚═════╝ ╚══════╝╚═╝  ╚═╝      ╚═╝  ╚═╝╚══════╝ ╚══▀▀═╝ ╚═╝╚═╝      
 
-copyright 2022 RHEA Group S.A. https://www.rheagroup.com
+Copyright 2022-2024 RHEA Group S.A. https://www.rheagroup.com
 		 email: info@rheagroup.com
 
 		 DEH-ReqIF version: DEHReqIFVersion

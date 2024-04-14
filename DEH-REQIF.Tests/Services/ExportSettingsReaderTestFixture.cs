@@ -1,7 +1,7 @@
 ﻿//  -------------------------------------------------------------------------------------------------
 //  <copyright file="ExportSettingsReaderTestFixture.cs" company="RHEA System S.A.">
 // 
-//    Copyright 2022 RHEA System S.A.
+//    Copyright 2022-2024 RHEA System S.A.
 // 
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -64,7 +64,7 @@ namespace DEHReqIF.Tests.Services
             Assert.That(exportSettings.SpecificationAttributeDefinitions.NameAttributeDefinitionId, Is.EqualTo("NAME-DOORS-MODULE"));
 
             Assert.That(exportSettings.ExternalIdentifierMap, Is.Not.Null);
-            Assert.That(exportSettings.ExternalIdentifierMap.Correspondence.Count, Is.EqualTo(1));
+            Assert.That(exportSettings.ExternalIdentifierMap.Correspondence, Has.Count.EqualTo(1));
             Assert.That(exportSettings.ExternalIdentifierMap.Correspondence.First().ExternalId, Is.EqualTo("EXTERNAL_ID"));
             Assert.That(exportSettings.ExternalIdentifierMap.Correspondence.First().InternalThing, Is.EqualTo(Guid.Parse("7d936326-544e-4990-96cf-54f67f7aa365")));
         }
@@ -113,7 +113,7 @@ namespace DEHReqIF.Tests.Services
             Assert.That(deserializedExportSettings.RequirementAttributeDefinitions.ForeignModifiedOnAttributeDefinitionId, Is.EqualTo(requirementForeignModifiedOnAttributeDefinitionId));
             Assert.That(deserializedExportSettings.SpecificationAttributeDefinitions.NameAttributeDefinitionId, Is.EqualTo(specificationNameAttributeDefinitionId));
             Assert.That(deserializedExportSettings.ExternalIdentifierMap, Is.Not.Null);
-            Assert.That(deserializedExportSettings.ExternalIdentifierMap.Correspondence.Count, Is.EqualTo(1));
+            Assert.That(deserializedExportSettings.ExternalIdentifierMap.Correspondence, Has.Count.EqualTo(1));
             Assert.That(deserializedExportSettings.ExternalIdentifierMap.Correspondence.First().ExternalId, Is.EqualTo(externalId));
             Assert.That(deserializedExportSettings.ExternalIdentifierMap.Correspondence.First().InternalThing, Is.EqualTo(internalThing));
         }
