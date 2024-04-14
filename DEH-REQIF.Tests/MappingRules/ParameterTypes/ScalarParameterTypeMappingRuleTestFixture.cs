@@ -48,7 +48,9 @@ namespace DEHReqIF.Tests.MappingRules.ParameterTypes
         [SetUp]
         public void SetUp()
         {
-            this.assembler = new Assembler(this.uri);
+            var messagebus = new CDPMessageBus();
+
+            this.assembler = new Assembler(this.uri, messagebus);
 
             this.scalarParameterTypeMappingRule = new ScalarParameterTypeMappingRule();
         }

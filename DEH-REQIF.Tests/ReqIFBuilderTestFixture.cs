@@ -96,11 +96,26 @@ namespace DEHReqIF.Tests
             this.engineeringModelIid = Guid.NewGuid();
             this.iterationIid = Guid.NewGuid();
 
-            this.assembler = new Assembler(this.uri);
+            var messagebus = new CDPMessageBus();
+
+            this.assembler = new Assembler(this.uri, messagebus);
 
             this.CreateExportSettings();
             await this.CreateTemplateReqIF();
             this.PopulateRequirementsData();
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            this.memoryTarget.Dispose();
+
+            this.iteration.Dispose();
+            this.requirementsGroup1.Dispose();
+            this.requirementsGroup2.Dispose();
+            this.requirement0.Dispose();
+            this.requirement1.Dispose();
+            this.requirement2.Dispose();
         }
 
         private void CreateExportSettings()
@@ -415,7 +430,7 @@ namespace DEHReqIF.Tests
             stream.Position = 0;
             var reqIfXml = new StreamReader(stream).ReadToEnd();
 
-            Assert.IsTrue(reqIfXml.ToLower().Contains("<alternative-id")); 
+            Assert.That(reqIfXml.ToLower().Contains("<alternative-id"), Is.True); 
         }
 
         [Test]

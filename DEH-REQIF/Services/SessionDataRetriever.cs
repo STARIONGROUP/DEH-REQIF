@@ -58,7 +58,9 @@ namespace DEHReqIF.Services
             var dal = new CDP4ServicesDal.CdpServicesDal();
             var credentials = new Credentials(userName, password, new Uri(dataSource));
 
-            var session = new Session(dal, credentials);
+            var messagebus = new CDPMessageBus();
+
+            var session = new Session(dal, credentials, messagebus);
             await session.Open(false);
 
             var siteDirectory = session.RetrieveSiteDirectory();

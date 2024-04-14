@@ -7,13 +7,15 @@
         <Description>A .NET library to conver ECSS-E-TM-10-25 requirements to an OMG ReqIF file.</Description>
         <PackageId>DEH-ReqIF</PackageId>
         <Company>RHEA System S.A.</Company>
-        <Copyright>Copyright 2022-2023 RHEA System S.A.</Copyright>
+        <Copyright>Copyright 2022-2024 RHEA System S.A.</Copyright>
         <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
         <RepositoryUrl>https://github.com/RHEAGROUP/DEH-REQIF.git</RepositoryUrl>
         <RepositoryType>Git</RepositoryType>
-        <PackageTags>ReqIF ECSS-E-TM-10-25 COMET</PackageTags>
+        <PackageTags>ReqIF ECSS-E-TM-10-25 CDP4-COMET</PackageTags>
         <Authors>Sam Gerené</Authors>
         <RequireLicenseAcceptance>false</RequireLicenseAcceptance>
+        <IncludeSource>true</IncludeSource>
+        <IncludeSymbols>true</IncludeSymbols>
         <PackageReleaseNotes>
             [Initial Version]
         </PackageReleaseNotes>
@@ -27,11 +29,11 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="CDP4ServicesDal-CE" Version="9.0.0" />
-        <PackageReference Include="NLog" Version="5.0.1" />
-        <PackageReference Include="NLog.Extensions.Logging" Version="5.0.1" />
-        <PackageReference Include="ReqIFSharp.Extensions" Version="2.0.0" />
-        <PackageReference Include="System.Text.Json" Version="7.0.2" />
+        <PackageReference Include="CDP4ServicesDal-CE" Version="26.6.1" />
+        <PackageReference Include="NLog" Version="5.2.8" />
+        <PackageReference Include="NLog.Extensions.Logging" Version="5.3.8" />
+        <PackageReference Include="ReqIFSharp.Extensions" Version="2.1.1" />
+        <PackageReference Include="System.Text.Json" Version="8.0.3" />
     </ItemGroup>
 
 </Project>
