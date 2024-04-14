@@ -392,25 +392,25 @@ namespace DEHReqIF.Tests
                 Assert.That(specification.Values.Where(x => x.ObjectValue == null).Count, Is.EqualTo(0));
 
                 Assert.That(group1, Is.Not.Null);
-                Assert.That(group1.Children.Count, Is.EqualTo(2));
-                Assert.That(group1.Object.Values.Count, Is.EqualTo(3));
+                Assert.That(group1.Children, Has.Count.EqualTo(2));
+                Assert.That(group1.Object.Values, Has.Count.EqualTo(3));
                 Assert.That(group1.Object.Values.Where(x => x.ObjectValue == null).Count, Is.EqualTo(0));
 
                 Assert.That(group2, Is.Not.Null);
-                Assert.That(group2.Children.Count, Is.EqualTo(1));
-                Assert.That(group2.Object.Values.Count, Is.EqualTo(3));
+                Assert.That(group2.Children, Has.Count.EqualTo(1));
+                Assert.That(group2.Object.Values, Has.Count.EqualTo(3));
                 Assert.That(group2.Object.Values.Where(x => x.ObjectValue == null).Count, Is.EqualTo(0));
 
                 Assert.That(req0, Is.Not.Null);
-                Assert.That(req0.Object.Values.Count, Is.EqualTo(4));
+                Assert.That(req0.Object.Values, Has.Count.EqualTo(4));
                 Assert.That(req0.Object.Values.Where(x => x.ObjectValue == null).Count, Is.EqualTo(0));
 
                 Assert.That(req1, Is.Not.Null);
-                Assert.That(req1.Object.Values.Count, Is.EqualTo(8));
+                Assert.That(req1.Object.Values, Has.Count.EqualTo(8));
                 Assert.That(req1.Object.Values.Where(x => x.ObjectValue == null).Count, Is.EqualTo(0));
 
                 Assert.That(req2, Is.Not.Null);
-                Assert.That(req2.Object.Values.Count, Is.EqualTo(4));
+                Assert.That(req2.Object.Values, Has.Count.EqualTo(4));
                 Assert.That(req2.Object.Values.Where(x => x.ObjectValue == null).Count, Is.EqualTo(0));
             });
         }

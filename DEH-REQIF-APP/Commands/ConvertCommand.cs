@@ -42,7 +42,7 @@ namespace DEHReqIF.Console.Commands
         /// <summary>
         /// Holds the <see cref="ILogger"/> for this class
         /// </summary>
-        private static ILogger logger = LogManager.GetCurrentClassLogger();
+        private static Logger logger = LogManager.GetCurrentClassLogger();
 
         /// <summary>
         /// The (injected) <see cref="IExportSettingsReader"/> used to read export settings

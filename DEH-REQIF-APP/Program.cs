@@ -44,7 +44,10 @@ namespace DEHReqIF.Console
         /// </summary>
         private static IContainer Container { get; set; }
 
-        private static ILogger logger = LogManager.Setup().LoadConfiguration(
+        /// <summary>
+        /// Holds the <see cref="ILogger"/> for this class
+        /// </summary>
+        private static Logger logger = LogManager.Setup().LoadConfiguration(
             builder => 
             {
                 builder.ForLogger().FilterMinLevel(LogLevel.Info).WriteToConsole();
