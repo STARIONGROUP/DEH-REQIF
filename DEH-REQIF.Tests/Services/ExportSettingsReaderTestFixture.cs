@@ -54,19 +54,21 @@ namespace DEHReqIF.Tests.Services
         {
             var exportSettings = await this.exportSettingsReader.ReadFile((this.settingsFilePath));
 
-            Assert.That(exportSettings.Title, Is.EqualTo("This is a test ReqIF document"));
+            Assert.Multiple(() => {
+                Assert.That(exportSettings.Title, Is.EqualTo("This is a test ReqIF document"));
 
-            Assert.That(exportSettings.RequirementAttributeDefinitions.TextAttributeDefinitionId, Is.EqualTo("OBJECTTEXT"));
-            Assert.That(exportSettings.RequirementAttributeDefinitions.ForeignDeletedAttributeDefinitionId, Is.EqualTo("Pseudo-ForeignDeleted"));
-            Assert.That(exportSettings.RequirementAttributeDefinitions.NameAttributeDefinitionId, Is.EqualTo("OBJECTSHORTTEXT"));
-            Assert.That(exportSettings.RequirementAttributeDefinitions.ForeignModifiedOnAttributeDefinitionId, Is.EqualTo("LASTMODIFIEDON"));
+                Assert.That(exportSettings.RequirementAttributeDefinitions.TextAttributeDefinitionId, Is.EqualTo("OBJECTTEXT"));
+                Assert.That(exportSettings.RequirementAttributeDefinitions.ForeignDeletedAttributeDefinitionId, Is.EqualTo("Pseudo-ForeignDeleted"));
+                Assert.That(exportSettings.RequirementAttributeDefinitions.NameAttributeDefinitionId, Is.EqualTo("OBJECTSHORTTEXT"));
+                Assert.That(exportSettings.RequirementAttributeDefinitions.ForeignModifiedOnAttributeDefinitionId, Is.EqualTo("LASTMODIFIEDON"));
 
-            Assert.That(exportSettings.SpecificationAttributeDefinitions.NameAttributeDefinitionId, Is.EqualTo("NAME-DOORS-MODULE"));
+                Assert.That(exportSettings.SpecificationAttributeDefinitions.NameAttributeDefinitionId, Is.EqualTo("NAME-DOORS-MODULE"));
 
-            Assert.That(exportSettings.ExternalIdentifierMap, Is.Not.Null);
-            Assert.That(exportSettings.ExternalIdentifierMap.Correspondence, Has.Count.EqualTo(1));
-            Assert.That(exportSettings.ExternalIdentifierMap.Correspondence.First().ExternalId, Is.EqualTo("EXTERNAL_ID"));
-            Assert.That(exportSettings.ExternalIdentifierMap.Correspondence.First().InternalThing, Is.EqualTo(Guid.Parse("7d936326-544e-4990-96cf-54f67f7aa365")));
+                Assert.That(exportSettings.ExternalIdentifierMap, Is.Not.Null);
+                Assert.That(exportSettings.ExternalIdentifierMap.Correspondence, Has.Count.EqualTo(1));
+                Assert.That(exportSettings.ExternalIdentifierMap.Correspondence.First().ExternalId, Is.EqualTo("EXTERNAL_ID"));
+                Assert.That(exportSettings.ExternalIdentifierMap.Correspondence.First().InternalThing, Is.EqualTo(Guid.Parse("7d936326-544e-4990-96cf-54f67f7aa365")));
+            });            
         }
 
         [Test]
@@ -106,16 +108,18 @@ namespace DEHReqIF.Tests.Services
 
             var deserializedExportSettings = this.exportSettingsReader.Read(json);
 
-            Assert.That(deserializedExportSettings.Title, Is.EqualTo(title));
-            Assert.That(deserializedExportSettings.RequirementAttributeDefinitions.TextAttributeDefinitionId, Is.EqualTo(requirementTextDataTypeDefinitionId));
-            Assert.That(deserializedExportSettings.RequirementAttributeDefinitions.ForeignDeletedAttributeDefinitionId, Is.EqualTo(requirementForeignDeletedAttributeDefinitionId));
-            Assert.That(deserializedExportSettings.RequirementAttributeDefinitions.NameAttributeDefinitionId, Is.EqualTo(requirementNameAttributeDefinitionId));
-            Assert.That(deserializedExportSettings.RequirementAttributeDefinitions.ForeignModifiedOnAttributeDefinitionId, Is.EqualTo(requirementForeignModifiedOnAttributeDefinitionId));
-            Assert.That(deserializedExportSettings.SpecificationAttributeDefinitions.NameAttributeDefinitionId, Is.EqualTo(specificationNameAttributeDefinitionId));
-            Assert.That(deserializedExportSettings.ExternalIdentifierMap, Is.Not.Null);
-            Assert.That(deserializedExportSettings.ExternalIdentifierMap.Correspondence, Has.Count.EqualTo(1));
-            Assert.That(deserializedExportSettings.ExternalIdentifierMap.Correspondence.First().ExternalId, Is.EqualTo(externalId));
-            Assert.That(deserializedExportSettings.ExternalIdentifierMap.Correspondence.First().InternalThing, Is.EqualTo(internalThing));
+            Assert.Multiple(() => {
+                Assert.That(deserializedExportSettings.Title, Is.EqualTo(title));
+                Assert.That(deserializedExportSettings.RequirementAttributeDefinitions.TextAttributeDefinitionId, Is.EqualTo(requirementTextDataTypeDefinitionId));
+                Assert.That(deserializedExportSettings.RequirementAttributeDefinitions.ForeignDeletedAttributeDefinitionId, Is.EqualTo(requirementForeignDeletedAttributeDefinitionId));
+                Assert.That(deserializedExportSettings.RequirementAttributeDefinitions.NameAttributeDefinitionId, Is.EqualTo(requirementNameAttributeDefinitionId));
+                Assert.That(deserializedExportSettings.RequirementAttributeDefinitions.ForeignModifiedOnAttributeDefinitionId, Is.EqualTo(requirementForeignModifiedOnAttributeDefinitionId));
+                Assert.That(deserializedExportSettings.SpecificationAttributeDefinitions.NameAttributeDefinitionId, Is.EqualTo(specificationNameAttributeDefinitionId));
+                Assert.That(deserializedExportSettings.ExternalIdentifierMap, Is.Not.Null);
+                Assert.That(deserializedExportSettings.ExternalIdentifierMap.Correspondence, Has.Count.EqualTo(1));
+                Assert.That(deserializedExportSettings.ExternalIdentifierMap.Correspondence.First().ExternalId, Is.EqualTo(externalId));
+                Assert.That(deserializedExportSettings.ExternalIdentifierMap.Correspondence.First().InternalThing, Is.EqualTo(internalThing));
+            });    
         }
     }
 }
