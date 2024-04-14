@@ -464,7 +464,7 @@ namespace DEHReqIF.Tests
 
             foreach (var log in this.memoryTarget.Logs)
             {
-                Assert.That(log.Contains($"The expected export setting {attritbuteDefinitionId} was not found in the template ReqIF file."), Is.True);
+                Assert.That(log, Does.Contain($"The expected export setting {attritbuteDefinitionId} was not found in the template ReqIF file."));
             }
         }
 
@@ -479,7 +479,7 @@ namespace DEHReqIF.Tests
 
             Assert.That(this.memoryTarget.Logs, Has.Count.EqualTo(1));
 
-            Assert.That(this.memoryTarget.Logs[0].Contains($"The expected export setting {attritbuteDefinitionId} was not found in the template ReqIF file."), Is.True);
+            Assert.That(this.memoryTarget.Logs[0], Does.Contain($"The expected export setting {attritbuteDefinitionId} was not found in the template ReqIF file."));
         }
 
         [Test]
@@ -493,7 +493,7 @@ namespace DEHReqIF.Tests
 
             Assert.That(this.memoryTarget.Logs, Has.Count.EqualTo(1));
 
-            Assert.That(this.memoryTarget.Logs[0].Contains("Multiple SpecObjectTypes were found. The first one found is selected as the SpecObjectType to use during conversion."), Is.True);
+            Assert.That(this.memoryTarget.Logs[0], Does.Contain("Multiple SpecObjectTypes were found. The first one found is selected as the SpecObjectType to use during conversion."));
         }
 
         [Test]
@@ -507,7 +507,7 @@ namespace DEHReqIF.Tests
 
             Assert.That(this.memoryTarget.Logs, Has.Count.EqualTo(1));
 
-            Assert.That(this.memoryTarget.Logs[0].Contains("Multiple SpecificationTypes were found. The first one found is selected as the SpecificationType to use during conversion."), Is.True);
+            Assert.That(this.memoryTarget.Logs[0], Does.Contain("Multiple SpecificationTypes were found. The first one found is selected as the SpecificationType to use during conversion."));
         }
 
         [Test]
