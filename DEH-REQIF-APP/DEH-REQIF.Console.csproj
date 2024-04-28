@@ -4,7 +4,7 @@
         <OutputType>Exe</OutputType>
         <TargetFramework>net8.0</TargetFramework>
         <RootNamespace>DEHReqIF.Console</RootNamespace>
-        <Version>3.0.0</Version>
+        <Version>2.0.0</Version>
         <Description>A Commandline application used to convert an E-TM-10-25 data source into a ReqIF document.</Description>
         <Company>Starion Group S.A.</Company>
         <Copyright>Copyright 2022-2024 Starion Group S.A.</Copyright>
@@ -14,7 +14,8 @@
         <Authors>Sam Gerené</Authors>
         <LangVersion>latest</LangVersion>
         <PackageReleaseNotes>
-            [Update] to net8
+            [Update] Starion Group
+            [Update] dependencies (Reqif, CDP4-SDK, NLog)
         </PackageReleaseNotes>
         <PackageIcon>cdp4-comet-logo.png</PackageIcon>
         <PackageReadmeFile>README.md</PackageReadmeFile>
@@ -30,13 +31,12 @@
 
     <ItemGroup>
         <PackageReference Include="Autofac" Version="7.0.1" />
-      
         <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="8.0.0" />
         <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
         <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
         <PackageReference Include="Microsoft.Extensions.CommandLineUtils" Version="1.1.1" />
-        <PackageReference Include="NLog" Version="5.2.8" />
-        <PackageReference Include="NLog.Extensions.Logging" Version="5.3.8" />
+        <PackageReference Include="NLog" Version="5.3.1" />
+        <PackageReference Include="NLog.Extensions.Logging" Version="5.3.9" />
     </ItemGroup>
 
     <ItemGroup>
