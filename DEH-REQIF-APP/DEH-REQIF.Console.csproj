@@ -4,12 +4,12 @@
         <OutputType>Exe</OutputType>
         <TargetFramework>net8.0</TargetFramework>
         <RootNamespace>DEHReqIF.Console</RootNamespace>
-        <Version>1.0.1</Version>
+        <Version>3.0.0</Version>
         <Description>A Commandline application used to convert an E-TM-10-25 data source into a ReqIF document.</Description>
-        <Company>RHEA System S.A.</Company>
-        <Copyright>Copyright 2022-2024 RHEA System S.A.</Copyright>
+        <Company>Starion Group S.A.</Company>
+        <Copyright>Copyright 2022-2024 Starion Group S.A.</Copyright>
         <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
-        <RepositoryUrl>https://github.com/RHEAGROUP/DEH-REQIF.git</RepositoryUrl>
+        <RepositoryUrl>https://github.com/STARIONGROUP/DEH-REQIF.git</RepositoryUrl>
         <RepositoryType>Git</RepositoryType>
         <Authors>Sam Gerené</Authors>
         <LangVersion>latest</LangVersion>

@@ -1,8 +1,8 @@
 ### Prerequisites
 
 - [ ] I have written a descriptive pull-request title
-- [ ] I have verified that there are no overlapping [pull-requests](https://github.com/RHEAGROUP/DEH-REQIF/pulls) open
-- [ ] I have verified that I am following the DEH-REQIF [code style guidelines](https://raw.githubusercontent.com/RHEAGROUP/DEH-REQIF/master/.github/CONTRIBUTING.md)
+- [ ] I have verified that there are no overlapping [pull-requests](https://github.com/STARIONGROUP/DEH-REQIF/pulls) open
+- [ ] I have verified that I am following the DEH-REQIF [code style guidelines](https://raw.githubusercontent.com/STARIONGROUP/DEH-REQIF/master/.github/CONTRIBUTING.md)
 - [ ] I have provided test coverage for my change (where applicable)
 
 ### Description

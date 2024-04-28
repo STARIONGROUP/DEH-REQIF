@@ -6,7 +6,7 @@
  ██████╔╝███████╗██║  ██║      ██║  ██║███████╗╚██████╔╝██║██║     
  ╚═════╝ ╚══════╝╚═╝  ╚═╝      ╚═╝  ╚═╝╚══════╝ ╚══▀▀═╝ ╚═╝╚═╝      
 
-Copyright 2022-2024 RHEA Group S.A. https://www.rheagroup.com
-		 email: info@rheagroup.com
+Copyright 2022-2024 Starion Group S.A. https://www.stariongroup.eu
+		 email: info@stariongroup.eu
 
 		 DEH-ReqIF version: DEHReqIFVersion

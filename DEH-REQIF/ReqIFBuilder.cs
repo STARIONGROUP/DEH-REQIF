@@ -1,7 +1,7 @@
 ﻿// -------------------------------------------------------------------------------------------------
-// <copyright file="ReqIFBuilder.cs" company="RHEA System S.A.">
+// <copyright file="ReqIFBuilder.cs" company="Starion Group S.A.">
 //
-//   Copyright 2022-2024 RHEA System S.A.
+//   Copyright 2022-2024 Starion Group S.A.
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -148,9 +148,9 @@ namespace DEHReqIF
                     Identifier = Guid.NewGuid().ToString(),
                     CreationTime = DateTime.UtcNow,
                     RepositoryId = $"EngineeringModel\\{engineeringModel.Iid}\\iteration\\{iteration.Iid}",
-                    ReqIFToolId = "RHEA DEH-REQIF",
+                    ReqIFToolId = "Starion Group DEH-REQIF",
                     ReqIFVersion = "1.2",
-                    SourceToolId = "RHEA COMET",
+                    SourceToolId = "Starion Group CDP4-COMET",
                     Title = this.exportSettings.Title
                 },
                 CoreContent = new ReqIFContent()

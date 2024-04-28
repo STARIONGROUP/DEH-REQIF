@@ -1,7 +1,7 @@
 // -------------------------------------------------------------------------------------------------
-// <copyright file="IReqIFBuilder.cs" company="RHEA System S.A.">
+// <copyright file="IReqIFBuilder.cs" company="Starion Group S.A.">
 //
-//   Copyright 2022-2024 RHEA System S.A.
+//   Copyright 2022-2024 Starion Group S.A.
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -57,7 +57,7 @@ namespace DEHReqIF.Tests
     [Apartment(ApartmentState.STA)]
     public class ReqIFBuilderTestFixture
     {
-        private readonly Uri uri = new("https://www.rheagroup.com");
+        private readonly Uri uri = new("https://www.stariongroup.eu");
         private Assembler assembler;
 
         private Iteration iteration;
@@ -337,9 +337,9 @@ namespace DEHReqIF.Tests
                 Assert.That(this.memoryTarget.Logs, Has.Count.EqualTo(0));
 
                 Assert.That(targetReqIf.TheHeader.RepositoryId, Is.EqualTo(@$"EngineeringModel\{this.engineeringModelIid}\iteration\{this.iterationIid}"));
-                Assert.That(targetReqIf.TheHeader.ReqIFToolId, Is.EqualTo("RHEA DEH-REQIF"));
+                Assert.That(targetReqIf.TheHeader.ReqIFToolId, Is.EqualTo("Starion Group DEH-REQIF"));
                 Assert.That(targetReqIf.TheHeader.ReqIFVersion, Is.EqualTo("1.2"));
-                Assert.That(targetReqIf.TheHeader.SourceToolId, Is.EqualTo("RHEA COMET"));
+                Assert.That(targetReqIf.TheHeader.SourceToolId, Is.EqualTo("Starion Group CDP4-COMET"));
                 Assert.That(targetReqIf.TheHeader.Title, Is.EqualTo("This is a test ReqIF document"));
                 
                 Assert.That(targetReqIf.CoreContent.SpecRelations, Has.Count.EqualTo(0));

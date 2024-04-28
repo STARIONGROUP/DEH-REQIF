@@ -3,9 +3,9 @@
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
         <Description>Unit tests for the DEH-ReqIF library.</Description>
-        <Company>RHEA System S.A.</Company>
-        <Copyright>Copyright 2022-2024 RHEA System S.A.</Copyright>
-        <RepositoryUrl>https://github.com/RHEAGROUP/DEH-REQIF.git</RepositoryUrl>
+        <Company>Starion Group S.A.</Company>
+        <Copyright>Copyright 2022-2024 Starion Group S.A.</Copyright>
+        <RepositoryUrl>https://github.com/STARIONGROUP/DEH-REQIF.git</RepositoryUrl>
         <RepositoryType>Git</RepositoryType>
         <RootNamespace>DEHReqIF.Tests</RootNamespace>
         <IsPackable>false</IsPackable>
