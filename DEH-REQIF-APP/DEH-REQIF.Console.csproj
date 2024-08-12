@@ -4,7 +4,7 @@
         <OutputType>Exe</OutputType>
         <TargetFramework>net8.0</TargetFramework>
         <RootNamespace>DEHReqIF.Console</RootNamespace>
-        <Version>2.0.0</Version>
+        <Version>2.0.1</Version>
         <Description>A Commandline application used to convert an E-TM-10-25 data source into a ReqIF document.</Description>
         <Company>Starion Group S.A.</Company>
         <Copyright>Copyright 2022-2024 Starion Group S.A.</Copyright>
@@ -14,8 +14,7 @@
         <Authors>Sam Gerené</Authors>
         <LangVersion>latest</LangVersion>
         <PackageReleaseNotes>
-            [Update] Starion Group
-            [Update] dependencies (Reqif, CDP4-SDK, NLog)
+            [Update] dependencies
         </PackageReleaseNotes>
         <PackageIcon>cdp4-comet-logo.png</PackageIcon>
         <PackageReadmeFile>README.md</PackageReadmeFile>
