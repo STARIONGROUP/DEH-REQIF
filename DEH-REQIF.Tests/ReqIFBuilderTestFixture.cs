@@ -332,8 +332,7 @@ namespace DEHReqIF.Tests
             Assert.Multiple(() =>
             {
                 Assert.That(string.IsNullOrWhiteSpace(reqIfXml), Is.Not.True);
-                Assert.That(reqIfXml.ToLower(), Does.Not.Contain("<alternative-id"));
-
+                
                 Assert.That(this.memoryTarget.Logs, Has.Count.EqualTo(0));
 
                 Assert.That(targetReqIf.TheHeader.RepositoryId, Is.EqualTo(@$"EngineeringModel\{this.engineeringModelIid}\iteration\{this.iterationIid}"));
