@@ -33,7 +33,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\DEH-REQIF-APP\DEH-REQIF.Console.csproj" />
+        <ProjectReference Include="..\DEH-REQIF.Console\DEH-REQIF.Console.csproj" />
     </ItemGroup>
 
     <ItemGroup>
