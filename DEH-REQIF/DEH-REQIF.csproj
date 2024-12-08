@@ -3,7 +3,7 @@
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
         <RootNamespace>DEHReqIF</RootNamespace>
-        <Version>2.0.1</Version>
+        <Version>3.0.0</Version>
         <Description>A .NET library to conver ECSS-E-TM-10-25 requirements to an OMG ReqIF file.</Description>
         <PackageId>DEH-ReqIF</PackageId>
         <Company>Starion Group S.A.</Company>
@@ -18,7 +18,10 @@
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <PackageReleaseNotes>
-            [Update] dependencies
+            [Update] CDP4-SDK to version 27.4.1
+            [Update] ReqIFSharp.Extensions to version 3.1.1
+            [Update] NLog to version 5.3.4
+            [Update] System.Text.Json to version 9.0.0
         </PackageReleaseNotes>
         <LangVersion>latest</LangVersion>
         <PackageIcon>cdp4-comet-logo.png</PackageIcon>
