@@ -39,7 +39,7 @@ namespace DEHReqIF.Services
         /// Opens a <see cref="ISession"/> and retrieves the necessary data
         /// </summary>
         /// <param name="userName">
-        /// The user name
+        /// The username
         /// </param>
         /// <param name="password">
         /// The password
@@ -48,7 +48,7 @@ namespace DEHReqIF.Services
         /// The data source
         /// </param>
         /// <param name="engineeringModelIid">
-        /// The unitqueidentifier of the <see cref="EngineeringModel"/> to open
+        /// The unique identifier of the <see cref="EngineeringModel"/> to open
         /// </param>
         /// <returns>
         /// An awaitable <see cref="Task{T}"/> of type <see cref="ISession"/>

@@ -138,14 +138,14 @@ namespace DEHReqIF.Console.Commands
             {
                 var sw = Stopwatch.StartNew();
 
-                var session = await this.OpenSessionAndRetrieveData();
+                var session = await this.OpenSessionAndRetrieveDataAsync();
                 var exportSettings = await this.exportSettingsReader.ReadFile(this.ExportSettings);
-                var targetReqIf = await this.BuildReqIf(session, exportSettings);
+                var targetReqIf = await this.BuildReqIfAsync(session, exportSettings);
 
-                await this.CreateReqIfFiles(targetReqIf);
+                await this.CreateReqIfFilesAsync(targetReqIf);
 
                 sw.Stop();
-                logger.Info("Conversion finished in {0}", sw.Elapsed.ToString("hh':'mm':'ss'.'fff"));
+                logger.Info("Conversion finished in {ElapsedTime}", sw.Elapsed.ToString("HH:mm:ss.fff"));
             }
             catch (Exception e)
             {
@@ -160,7 +160,7 @@ namespace DEHReqIF.Console.Commands
         /// Open the <see cref="Session"/> and retrieve the wanted data
         /// </summary>
         /// <returns>An awaitable <see cref="Task"/> of type <see cref="ISession"/></returns>
-        private async Task<ISession> OpenSessionAndRetrieveData()
+        private async Task<ISession> OpenSessionAndRetrieveDataAsync()
         {
             var sw = Stopwatch.StartNew();
 
@@ -168,7 +168,7 @@ namespace DEHReqIF.Console.Commands
                 await this.sessionDataRetriever
                     .OpenSessionAndRetrieveData(this.Username, this.Password, this.DataSource, Guid.Parse(this.EngineeringModelIid));
 
-            logger.Info($"Session was opened and data was read in {sw.ElapsedMilliseconds} [ms]");
+            logger.Info("Session was opened and data was read in {ElapsedMilliseconds} [ms]", sw.ElapsedMilliseconds);
 
             return session;
         }
@@ -179,13 +179,13 @@ namespace DEHReqIF.Console.Commands
         /// <param name="session">The <see cref="ISession"/></param>
         /// <param name="exportSettings">The <see cref="ExportSettings"/></param>
         /// <returns>An awaitable <see cref="Task{T}"/> of type <see cref="ReqIF"/></returns>
-        private async Task<ReqIF> BuildReqIf(ISession session, ExportSettings exportSettings)
+        private async Task<ReqIF> BuildReqIfAsync(ISession session, ExportSettings exportSettings)
         {
             var sw = Stopwatch.StartNew();
 
             var targetReqIF = await this.templateBasedReqIfBuilder.Build(this.TemplateSource, session, exportSettings, this.ExcludeAlternativeId);
 
-            logger.Info($"Target ReqIf was built in {sw.ElapsedMilliseconds} [ms]");
+            logger.Info("Target ReqIf was built in {ElapsedMilliseconds} [ms]", sw.ElapsedMilliseconds);
 
             return targetReqIF;
         }
@@ -195,13 +195,13 @@ namespace DEHReqIF.Console.Commands
         /// </summary>
         /// <param name="targetReqIf">The <see cref="ReqIF"/> document</param>
         /// <returns>an awaitable <see cref="Task"/></returns>
-        private async Task CreateReqIfFiles(ReqIF targetReqIf)
+        private async Task CreateReqIfFilesAsync(ReqIF targetReqIf)
         {
             var sw = Stopwatch.StartNew();
 
             await this.reqifFileWriter.WriteReqIfFiles(targetReqIf, this.TargetReqIF);
 
-            logger.Info($"ReqIf was created in {sw.ElapsedMilliseconds} [ms]");
+            logger.Info("ReqIf was created in {ElapsedMilliseconds} [ms]", sw.ElapsedMilliseconds);
         }
     }
 }

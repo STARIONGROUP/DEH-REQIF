@@ -83,7 +83,7 @@ namespace DEHReqIF.Mapping
                 }
             }
 
-            Logger.Warn($"Could not map {input}, no corresponding mapping rule has been found");
+            Logger.Warn("Could not map {Input}, no corresponding mapping rule has been found", input);
 
             return default;
         }
