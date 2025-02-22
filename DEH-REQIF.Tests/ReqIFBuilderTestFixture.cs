@@ -181,7 +181,7 @@ namespace DEHReqIF.Tests
             var cts = new CancellationTokenSource();
 
             await using var fileStream = new FileStream(this.reqifTemplatePath, FileMode.Open);
-            await reqIFLoaderService.Load(fileStream, this.reqifTemplatePath.ConvertPathToSupportedFileExtensionKind(), cts.Token);
+            await reqIFLoaderService.LoadAsync(fileStream, this.reqifTemplatePath.ConvertPathToSupportedFileExtensionKind(), cts.Token);
 
             this.templateReqIF = reqIFLoaderService.ReqIFData.Single();
         }

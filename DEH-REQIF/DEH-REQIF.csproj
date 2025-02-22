@@ -3,7 +3,7 @@
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
         <RootNamespace>DEHReqIF</RootNamespace>
-        <Version>3.0.0</Version>
+        <Version>3.1.0</Version>
         <Description>A .NET library to conver ECSS-E-TM-10-25 requirements to an OMG ReqIF file.</Description>
         <PackageId>DEH-ReqIF</PackageId>
         <Company>Starion Group S.A.</Company>
@@ -18,10 +18,10 @@
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <PackageReleaseNotes>
-            [Update] CDP4-SDK to version 27.4.1
-            [Update] ReqIFSharp.Extensions to version 3.1.1
-            [Update] NLog to version 5.3.4
-            [Update] System.Text.Json to version 9.0.0
+            [Update] CDP4-SDK to version 28.1.0
+            [Update] ReqIFSharp.Extensions to version 4.1.0
+            [Update] NLog.Extensions.Logging to version 5.4.0
+            [Update] System.Text.Json to version 9.0.2
         </PackageReleaseNotes>
         <LangVersion>latest</LangVersion>
         <PackageIcon>cdp4-comet-logo.png</PackageIcon>
@@ -35,11 +35,10 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="CDP4ServicesDal-CE" Version="27.4.1" />
-        <PackageReference Include="NLog" Version="5.3.4" />
-        <PackageReference Include="NLog.Extensions.Logging" Version="5.3.15" />
-        <PackageReference Include="ReqIFSharp.Extensions" Version="3.1.1" />
-        <PackageReference Include="System.Text.Json" Version="9.0.0" />
+        <PackageReference Include="CDP4ServicesDal-CE" Version="28.1.0" />
+        <PackageReference Include="NLog.Extensions.Logging" Version="5.4.0" />
+        <PackageReference Include="ReqIFSharp.Extensions" Version="4.1.0" />
+        <PackageReference Include="System.Text.Json" Version="9.0.2" />
     </ItemGroup>
 
     <ItemGroup>

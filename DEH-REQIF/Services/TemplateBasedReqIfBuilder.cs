@@ -62,7 +62,7 @@ namespace DEHReqIF.Services
         {
             using var fileStream = new FileStream(templateSourceLocation, FileMode.Open);
 
-            await this.reqIfLoaderService.Load(fileStream, templateSourceLocation.ConvertPathToSupportedFileExtensionKind(), new CancellationToken());
+            await this.reqIfLoaderService.LoadAsync(fileStream, templateSourceLocation.ConvertPathToSupportedFileExtensionKind(), new CancellationToken());
 
             var templateReqIF = this.reqIfLoaderService.ReqIFData.Single();
 
