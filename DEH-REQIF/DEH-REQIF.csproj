@@ -7,7 +7,7 @@
         <Description>A .NET library to conver ECSS-E-TM-10-25 requirements to an OMG ReqIF file.</Description>
         <PackageId>DEH-ReqIF</PackageId>
         <Company>Starion Group S.A.</Company>
-        <Copyright>Copyright 2022-2024 Starion Group S.A.</Copyright>
+        <Copyright>Copyright 2022-2025 Starion Group S.A.</Copyright>
         <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
         <RepositoryUrl>https://github.com/STARIONGROUP/DEH-REQIF.git</RepositoryUrl>
         <RepositoryType>Git</RepositoryType>

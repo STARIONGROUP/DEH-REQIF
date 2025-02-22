@@ -1,7 +1,7 @@
 ﻿// -------------------------------------------------------------------------------------------------
 // <copyright file="Program.cs" company="Starion Group S.A.">
 //
-//   Copyright 2022-2024 Starion Group S.A.
+//   Copyright 2022-2025 Starion Group S.A.
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@
 namespace DEHReqIF.Console
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
 
     using Autofac;
 
@@ -37,6 +38,10 @@ namespace DEHReqIF.Console
     using ReqIFSharp;
     using ReqIFSharp.Extensions.Services;
 
+    /// <summary>
+    /// Entry point of the Commandline application
+    /// </summary>
+    [ExcludeFromCodeCoverage]
     public static class Program
     {
         /// <summary>

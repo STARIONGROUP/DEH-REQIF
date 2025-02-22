@@ -4,7 +4,7 @@
         <TargetFramework>net9.0</TargetFramework>
         <Description>Unit tests for the DEH-ReqIF Console application.</Description>
         <Company>Starion Group S.A.</Company>
-        <Copyright>Copyright 2022-2024 Starion Group S.A.</Copyright>
+        <Copyright>Copyright 2022-2025 Starion Group S.A.</Copyright>
         <RepositoryUrl>https://github.com/STARIONGROUP/DEH-REQIF.git</RepositoryUrl>
         <RepositoryType>Git</RepositoryType>
         <RootNamespace>DEHReqIF.Console.Tests</RootNamespace>
